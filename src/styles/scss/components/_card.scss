@@ -1,0 +1,98 @@
+.app .main .card {
+    padding: 16px;
+    transition: all 0.2s ease-in-out;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    gap: 10px;
+
+    &__buy {
+        position: absolute;
+        bottom: -20px;
+        right: 20px;
+        background-color: var(--c-primary);
+        border-radius: 50%;
+        filter: drop-shadow(0px 4px 11px rgba(29, 31, 34, 0.1));
+        transition: all 0.2s ease-in-out;
+        opacity: 0;
+        cursor: pointer;
+
+        &--icon {
+            color: var(--c-white);
+            font-size: 1.5rem;
+            padding: 10px;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            svg {
+                width: 100%;
+                height: 100%;
+            }
+        }
+    }
+    &__image {
+        max-width: 354px;
+        max-height: 330px;
+        width: 354px;
+        height: 330px;
+        position: relative;
+        &--img {
+            width: 100%;
+            height: 100%;
+        }
+    }
+
+    &__text {
+        font-size: 18px;
+        font-weight: 300;
+        color: var(--c-black);
+        margin-top: 1rem;
+    }
+    &__price {
+        color: var(--c-black);
+        font-size: 18px;
+        font-weight: 700;
+    }
+
+    &__info {
+        position: absolute;
+        inset: 0;
+        color: #8d8f9a;
+
+        background-color: #ffffff;
+        opacity: 50%;
+
+        // - Could be done by position absolute as well
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        span {
+            font-size: 24px;
+            line-height: 160%;
+            color: #8d8f9a;
+            font-weight: normal;
+        }
+    }
+
+    &.stock-out {
+        .card__text,
+        .card__price {
+            color: #8d8f9a;
+        }
+    }
+
+    //  Hover effect
+    &:hover {
+        filter: drop-shadow(0px 4px 35px rgba(168, 172, 176, 0.19));
+
+        box-shadow: 0px 4px 35px rgba(168, 172, 176, 0.19);
+        background: #ffffff;
+
+        .card__buy {
+            opacity: 1;
+        }
+    }
+}
