@@ -1,4 +1,3 @@
-import { throws } from 'assert';
 import React, { Component } from 'react';
 import './App.css';
 import { Card } from './components/card/Card';
