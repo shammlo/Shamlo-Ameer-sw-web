@@ -1,7 +1,7 @@
 //********** IMPORTS ************* */
 import React, { Component } from 'react';
 import Wrapper from '../utils/Hoc/Wrappers/Wrapper';
-import { fetchData } from '../store/fetchData';
+// import { fetchData } from '../store/fetchData';
 import { Header } from '../components/header/Header';
 
 //******************************** */
@@ -13,9 +13,7 @@ interface LayoutProps {
 class Layout extends Component {
     constructor(props: LayoutProps) {
         super(props);
-        this.state = {
-            query: '',
-        };
+        this.state = {};
     }
     componentDidMount = () => {
         document.title = 'Home';
@@ -29,7 +27,7 @@ class Layout extends Component {
     };
     render() {
         return (
-            <Wrapper class="layout">
+            <Wrapper class="app layout">
                 <Header />
                 <main className="main">{this.props.children}</main>
             </Wrapper>
