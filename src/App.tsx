@@ -1,20 +1,11 @@
 import React, { Component } from 'react';
-import './App.css';
-import { Card } from './components/card/Card';
-import Layout from './layout/Layout';
-import Wrapper from './utils/Hoc/Wrappers/Wrapper';
-
+import { Layout } from './layout/Layout';
+import { Route, Routes } from 'react-router-dom';
+import { CategoryPage } from './pages/category/CategoryPage';
+import { ProductPage } from './pages/product-description/ProductPage';
 // *********************************
-type Item = {
-    img: string;
-    text: string;
-    price: string | number;
-    inStock: boolean;
-};
 interface AppProps {}
-interface AppState {
-    inStock: boolean;
-}
+interface AppState {}
 class App extends Component<AppProps, AppState> {
     constructor(props: AppProps) {
         super(props);
@@ -25,67 +16,13 @@ class App extends Component<AppProps, AppState> {
     // ----------------------------------------------------------------
     render() {
         // Deleting later and replacing with api call
-        const items: Item[] = [
-            {
-                img: 'assets/images/test-1.jpg',
-                text: 'Apollo Running Short',
-                price: '100.00',
-                inStock: true,
-            },
-            {
-                img: 'assets/images/test-4.jpg',
-                text: 'Apollo Running Short',
-                price: '100.00',
-                inStock: true,
-            },
-            {
-                img: 'assets/images/test-1.jpg',
-                text: 'Apollo Running Short',
-                price: '100.00',
-                inStock: false,
-            },
-            {
-                img: 'assets/images/test-1.jpg',
-                text: 'Apollo Running Short',
-                price: '100.00',
-                inStock: true,
-            },
-            {
-                img: 'assets/images/test-4.jpg',
-                text: 'Apollo Running Short',
-                price: '100.00',
-                inStock: true,
-            },
-            {
-                img: 'assets/images/test-1.jpg',
-                text: 'Apollo Running Short',
-                price: '100.00',
-                inStock: true,
-            },
-        ];
+
         return (
             <Layout>
-                <Wrapper class="category">
-                    <Wrapper class="container">
-                        <Wrapper class="category__title">
-                            <h1 className="category__title--text">Category name</h1>
-                        </Wrapper>
-
-                        <Wrapper class="category__cards">
-                            {items.map((item: Item, index: number) => {
-                                return (
-                                    <Card
-                                        key={index}
-                                        text={item.text}
-                                        price={item.price}
-                                        img={item.img}
-                                        inStock={item.inStock}
-                                    />
-                                );
-                            })}
-                        </Wrapper>
-                    </Wrapper>
-                </Wrapper>
+                <Routes>
+                    <Route path="/" element={<CategoryPage />} />
+                    <Route path="/product/:productId" element={<ProductPage />} />
+                </Routes>
             </Layout>
         );
     }
