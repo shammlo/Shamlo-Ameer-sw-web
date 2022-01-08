@@ -1,6 +1,5 @@
 //********** IMPORTS ************* */
 import React, { Component } from 'react';
-import Wrapper from '../../utils/Hoc/Wrappers/Wrapper';
 import { NavigationList } from './navigation-list/NavigationList';
 //******************************** */
 
@@ -13,9 +12,9 @@ class Navigation extends Component {
     }
     render() {
         return (
-            <Wrapper class="nav">
+            <nav className="nav">
                 <NavigationList />
-            </Wrapper>
+            </nav>
         );
     }
 }
