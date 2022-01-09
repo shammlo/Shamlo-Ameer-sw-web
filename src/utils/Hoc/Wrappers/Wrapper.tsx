@@ -4,7 +4,7 @@ import React from 'react';
 //******************************** */
 interface Props {
     class?: string | undefined;
-    clicked?: () => void;
+    clicked?: (args: any) => void;
     style?: React.CSSProperties;
     children?: React.ReactNode;
     dataType?: string;
