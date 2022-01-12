@@ -1,0 +1,81 @@
+//******** BASE ********\\
+
+*,
+*::before,
+*::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: inherit;
+}
+img {
+    aspect-ratio: attr(width) / attr(height);
+
+    height: auto;
+    width: 100%;
+}
+a {
+    color: inherit;
+    text-decoration: none;
+}
+p {
+    font-family: inherit;
+    font-family: Roboto;
+    font-style: normal;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-family: inherit;
+    font-weight: inherit;
+    color: #5e5873;
+    color: var(--c-text);
+}
+html {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-size: 62.5%;
+    scroll-behavior: smooth;
+
+    @media only screen and (max-width: $bp-1200) {
+        font-size: 50%;
+    }
+    @include responsive(large-desktop) {
+        font-size: 87%; //- 1rem = 12px, 12/16= 0.75 = 75%
+    }
+    //? this is commented because it will be ENABLED on our laptop
+    @include responsive(big-desktop) {
+        font-size: 75%; //- 1rem = 12px, 12/16= 0.75 = 75%
+    }
+
+    @include responsive(tablet-landscape) {
+        font-size: 56.25%; //- 1rem = 9px, 9/16= 0.56.25 = 56.25%
+    }
+
+    @include responsive(tablet-portrait) {
+        font-size: 50%; //- 1rem = 8px, 8/16= 0.5 = 50%
+    }
+}
+body {
+    font-family: Raleway, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    font-size: 1.6rem;
+    font-weight: 400;
+    transition: all 0.3s ease-in-out;
+    background-color: var(--c-bg-body);
+    color: var(--c-text);
+}
+
+html,
+html body,
+#__root,
+.app {
+    height: 100%;
+}
+
+//*************************
