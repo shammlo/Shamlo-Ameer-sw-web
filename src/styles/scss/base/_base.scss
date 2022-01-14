@@ -23,6 +23,11 @@ p {
     font-style: normal;
 }
 
+.app .icon {
+    width: 100%;
+    height: 100%;
+}
+
 h1,
 h2,
 h3,
@@ -47,7 +52,6 @@ html {
     @include responsive(large-desktop) {
         font-size: 87%; //- 1rem = 12px, 12/16= 0.75 = 75%
     }
-    //? this is commented because it will be ENABLED on our laptop
     @include responsive(big-desktop) {
         font-size: 75%; //- 1rem = 12px, 12/16= 0.75 = 75%
     }
