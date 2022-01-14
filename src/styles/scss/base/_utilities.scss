@@ -1,0 +1,26 @@
+//********** UTILITIES **********/
+
+//----------------------------------------------------------------
+//- Display
+.flex {
+    display: flex;
+
+    .ai {
+        &-center {
+            align-items: center;
+        }
+    }
+    .jc {
+        &-center {
+            justify-content: center;
+        }
+    }
+}
+.center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.mb-10 {
+    margin-bottom: 10px;
+}
