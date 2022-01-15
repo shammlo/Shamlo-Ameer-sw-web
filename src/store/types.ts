@@ -7,7 +7,7 @@ type Currency = {
     label: string;
     symbol: string;
 };
-type Price = {
+export type Price = {
     currency: Currency;
     amount: number;
 };
@@ -28,5 +28,5 @@ export type ProductType = {
     attributes: [Attributes];
     prices: [Price];
     brand: string;
-    quantity?: number;
+    quantity: number | undefined;
 };
