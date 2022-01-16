@@ -13,9 +13,9 @@ class NavigationList extends Component {
     render() {
         return (
             <ul className="nav__list">
-                <NavigationItem href="#" title="women" active />
-                <NavigationItem href="#" title="men" />
-                <NavigationItem href="#" title="kids" />
+                <NavigationItem href="/category/all" title="all" />
+                <NavigationItem href="/category/clothes" title="clothes" />
+                <NavigationItem href="/category/tech" title="tech" />
             </ul>
         );
     }

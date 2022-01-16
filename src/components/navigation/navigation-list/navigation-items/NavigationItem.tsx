@@ -1,5 +1,7 @@
 //********** IMPORTS ************* */
 import React, { Component } from 'react';
+import { NavLink } from 'react-router-dom';
+
 //******************************** */
 
 interface NavigationItemProps {
@@ -15,17 +17,20 @@ class NavigationItem extends Component<NavigationItemProps> {
         this.state = {};
     }
     render() {
-        const active = this.props.active ? 'active' : '';
-
         // Could use this approach if you want to use (a)tag other than a simple span
         //  <a href={this.props.href} className="nav__item--link">
         //     <span className="nav__item--title">{this.props.title}</span>
         // </a>
         return (
-            <li className={`nav__item ${active}`}>
-                <span className="nav__item--title">{this.props.title}</span>
-
-                {this.props.active ? <div className="active-item"></div> : null}
+            <li className={`nav__item`}>
+                <NavLink
+                    to={this.props.href}
+                    className={({ isActive }) =>
+                        isActive ? 'nav__item--link active' : 'nav__item--link'
+                    }
+                >
+                    <span className="nav__item--title">{this.props.title}</span>
+                </NavLink>
             </li>
         );
     }
