@@ -23,7 +23,7 @@ class Icon extends Component<IconProps, IconState> {
 
         switch (this.props.title) {
             case 'cart':
-                icon = (
+                return (icon = (
                     <svg
                         width="20"
                         height="19"
@@ -45,10 +45,10 @@ class Icon extends Component<IconProps, IconState> {
                             fill="#43464E"
                         />
                     </svg>
-                );
-                break;
+                ));
+
             case 'logo':
-                icon = (
+                return (icon = (
                     <svg
                         width="33"
                         height="31"
@@ -97,10 +97,10 @@ class Icon extends Component<IconProps, IconState> {
                             </clipPath>
                         </defs>
                     </svg>
-                );
-                break;
+                ));
+
             case 'arrow-down':
-                icon = (
+                return (icon = (
                     <svg
                         width="8"
                         height="4"
@@ -116,10 +116,10 @@ class Icon extends Component<IconProps, IconState> {
                             strokeLinejoin="round"
                         />
                     </svg>
-                );
-                break;
+                ));
+
             case 'arrow-up':
-                icon = (
+                return (icon = (
                     <svg
                         width="8"
                         height="4"
@@ -135,10 +135,10 @@ class Icon extends Component<IconProps, IconState> {
                             strokeLinejoin="round"
                         />
                     </svg>
-                );
-                break;
+                ));
+
             case 'buy':
-                icon = (
+                return (icon = (
                     <svg
                         width="24"
                         height="23"
@@ -160,8 +160,24 @@ class Icon extends Component<IconProps, IconState> {
                             fill="white"
                         />
                     </svg>
-                );
-                break;
+                ));
+
+            case 'close':
+                return (icon = (
+                    <svg
+                        stroke="currentColor"
+                        fill="currentColor"
+                        strokeWidth="0"
+                        viewBox="0 0 512 512"
+                        color="#02073E"
+                        height="24px"
+                        width="24px"
+                        xmlns="http://www.w3.org/2000/svg"
+                        style={{ color: 'rgb(2, 7, 62)' }}
+                    >
+                        <path d="M405 136.798L375.202 107 256 226.202 136.798 107 107 136.798 226.202 256 107 375.202 136.798 405 256 285.798 375.202 405 405 375.202 285.798 256z"></path>
+                    </svg>
+                ));
             default:
                 icon = null;
                 break;
