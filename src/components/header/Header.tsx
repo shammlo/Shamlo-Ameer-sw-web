@@ -6,6 +6,7 @@ import Cart from '../cart/Cart';
 import { Icon } from '../icon/Icon';
 import { Navigation } from '../navigation/Navigation';
 import * as actions from '../../store/actions/Actions';
+
 // import { ProductType } from '../../store/types';
 //******************************** */
 interface HeaderState {
@@ -20,7 +21,7 @@ interface HeaderProps {
     cart: object[];
     currencySymbol: string;
     changeCurrency: (currency: string, symbol: string) => void;
-    notificationCounter: (number: number) => void;
+    // notificationCounter: (number: number) => void;
     notificationCount: number;
 }
 
@@ -33,23 +34,20 @@ class Header extends Component<HeaderProps, HeaderState> {
         };
     }
 
-    componentDidUpdate(prevProps: any) {
-        let currentCount = 0;
-        if (prevProps.cart !== this.props.cart) {
-            this.props.cart?.forEach((item: any) => {
-                currentCount += item?.quantity;
-            });
-            // this.setState({ count: currentCount });
-            this.props.notificationCounter(currentCount);
-        }
-    }
+    // componentDidUpdate(prevProps: any) {
+    //     let currentCount = 0;
+    //     if (prevProps.cart !== this.props.cart) {
+    //         this.props.cart?.forEach((item: any) => {
+    //             currentCount += item?.quantity;
+    //         });
+    //         // this.setState({ count: currentCount });
+    //         this.props.notificationCounter(currentCount);
+    //     }
+    // }
 
     toggleCurrencyDropdown = () =>
         this.setState({ currencyDropdown: !this.state.currencyDropdown });
 
-    changeCurrency = (currency: string, symbol: string) => {
-        this.props.changeCurrency(currency, symbol);
-    };
     render() {
         return (
             <header className="header">
@@ -86,7 +84,7 @@ class Header extends Component<HeaderProps, HeaderState> {
                                                     <li
                                                         key={currency.label}
                                                         onClick={() =>
-                                                            this.changeCurrency(
+                                                            this.props.changeCurrency(
                                                                 currency.label,
                                                                 currency.symbol
                                                             )
@@ -144,8 +142,5 @@ const mapStateToProps = (state: {
 const mapDispatchToProps = (dispatch: (arg0: any) => void) => ({
     changeCurrency: (currency: string, symbol: string) =>
         dispatch(actions.productData.changeCurrency(currency, symbol)),
-
-    notificationCounter: (count: number) =>
-        dispatch(actions.productData.notificationCounter(count)),
 });
 export default connect(mapStateToProps, mapDispatchToProps)(Header);
