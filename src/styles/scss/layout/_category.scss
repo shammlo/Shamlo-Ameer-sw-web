@@ -1,0 +1,128 @@
+.app .main {
+    .category {
+        padding-top: 70px;
+        padding-bottom: 50px;
+
+        &__title {
+            font-family: Raleway, sans-serif;
+            font-size: 2rem;
+            font-weight: normal;
+            color: var(--c-black);
+            margin-bottom: 1rem;
+            text-transform: capitalize;
+
+            &--selection {
+                display: flex;
+                align-items: center;
+                padding-top: 10px;
+
+                .category__list {
+                    display: flex;
+                    justify-content: flex-start;
+                    align-items: center;
+                    list-style: none;
+
+                    &--item {
+                        padding: 5px;
+                        transition: all 0.2s ease-in-out;
+                        border-radius: 4px;
+                        &:hover:nth-child(odd) {
+                            cursor: pointer;
+                            background-color: rgba(190, 190, 190, 0.425);
+                        }
+
+                        &:not(:last-child) {
+                            margin-right: 10px;
+                        }
+                    }
+                }
+                &.active {
+                    background-color: rgba(190, 190, 190, 0.425);
+                }
+            }
+        }
+        &__cards {
+            // - didnt remove comments to showcase that these work too.
+            display: grid;
+            // display: flex;
+            // justify-content: space-between;
+            // flex-wrap: wrap;
+            // align-items: center;
+            grid-template-columns: 1fr 1fr 1fr;
+            // grid-template-columns: repeat(auto-fill, minmax(386px, 1fr));
+            padding: 5rem 0;
+            // full browser support except IE
+            row-gap: 80px;
+            column-gap: 130px;
+
+            @include mq($bp-1550) {
+                // grid-template-columns: repeat(auto-fill, minmax(366px, 1fr));
+                grid-column-gap: 25px;
+            }
+
+            @include mq($bp-1200) {
+                // grid-template-columns: repeat(auto-fill, minmax(356px, 1fr));
+            }
+            @include mq($bp-1000) {
+                grid-template-columns: repeat(auto-fill, minmax(306px, 1fr));
+                column-gap: 100px;
+            }
+
+            @include mq($bp-900) {
+                grid-template-columns: repeat(auto-fill, minmax(410px, 1fr));
+            }
+
+            .card {
+                max-width: 386px;
+                // max-height: 444px;
+                @include mq($bp-1000) {
+                    max-width: 326px;
+                }
+                @include mq($bp-900) {
+                    max-width: 400px;
+                    width: 400px;
+                    margin: 0 auto;
+                }
+            }
+        }
+
+        &__pagination {
+            padding: 10px 10px 20px 10px;
+            // height: 6rem;
+            width: 200px;
+            margin: 0 auto;
+            &--list {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                list-style: none;
+                height: 100%;
+                background-color: var(--c-white);
+                box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+                border-radius: 10px;
+            }
+            &--item {
+                cursor: pointer;
+
+                user-select: none;
+
+                padding: 10px 13px;
+                // border: 1px solid rgb(240, 240, 240);
+                border-left: 1px solid rgb(240, 240, 240);
+                border-right: 1px solid rgb(240, 240, 240);
+                &:not(:last-child) {
+                    border-right-color: transparent;
+                }
+                span {
+                    font-size: 18px;
+                    // font-style: Roboto, sans-serif;
+                    font-weight: 600;
+                }
+
+                &:hover {
+                    background-color: #f1f1f1;
+                }
+            }
+        }
+    }
+}
