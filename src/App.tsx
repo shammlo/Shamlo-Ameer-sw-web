@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import Layout from './layout/Layout';
-import { Route, Routes } from 'react-router-dom';
+import { Route, Routes, Navigate } from 'react-router-dom';
 import CategoryPage from './pages/category/CategoryPage';
 import ProductPage from './pages/product-description/ProductPage';
 import CartPage from './pages/cart/CartPage';
@@ -11,9 +11,7 @@ interface AppState {}
 class App extends Component<AppProps, AppState> {
     constructor(props: AppProps) {
         super(props);
-        this.state = {
-            inStock: false,
-        };
+        this.state = {};
     }
     // ----------------------------------------------------------------
     render() {
@@ -22,9 +20,14 @@ class App extends Component<AppProps, AppState> {
         return (
             <Layout>
                 <Routes>
-                    <Route path="/" element={<CategoryPage />} />
-                    <Route path="/product/:productId" element={<ProductPage />} />
-                    <Route path="/cart" element={<CartPage />} />
+                    <Route path="/category/" element={<CategoryPage />} />
+                    <Route path="/category/:categoryName" element={<CategoryPage />} />
+                    <Route
+                        path="/category/:categoryName/product/:productId"
+                        element={<ProductPage />}
+                    />
+                    <Route path="/cart/bag" element={<CartPage />} />
+                    <Route path="/" element={<Navigate replace to="/category/all" />} />
                 </Routes>
             </Layout>
         );
