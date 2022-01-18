@@ -1,10 +1,13 @@
 //********** IMPORTS ************* */
 import { Component } from 'react';
 import Wrapper from '../../utils/Hoc/Wrappers/Wrapper';
-import { CartCard } from './cart-card/CartCard';
+import CartCard from './cart-card/CartCard';
 import { connect } from 'react-redux';
 import * as actions from '../../store/actions/Actions';
 import { withRouter } from '../../utils/Hoc/withParams';
+import { numberWithCommas } from '../../utils/helper-functions/helperFunctions';
+import { Button } from '../ui/Button';
+import { Modal } from '../ui/modal/Modal';
 
 //******************************** */
 
@@ -15,13 +18,24 @@ interface CartProps {
     removeFromCart: (id: string) => void;
     router: any;
     toggleCart: (open: boolean | undefined) => void;
-    productsCurrency: object[];
     currencySymbol: string;
     selectedCurr: any;
+    notificationCounter: (number: number) => void;
+    totalPrice: number;
+    totalPriceHandler: () => void;
+    increaseItemQuantity: (id: string) => void;
+    decreaseItemQuantity: (id: string) => void;
+    cartItems: number;
+    selectedAttrs: {
+        [key: string]: {
+            [key: string]: string;
+        };
+    };
 }
 interface CartState {
     totalPrice: number;
     items: number;
+    modalOpen: boolean;
 }
 class Cart extends Component<CartProps, CartState> {
     constructor(props: CartProps) {
@@ -29,167 +43,152 @@ class Cart extends Component<CartProps, CartState> {
         this.state = {
             totalPrice: 0,
             items: 0,
+            modalOpen: false,
         };
     }
 
     componentDidUpdate(prevProps: CartProps) {
-        let items = 0;
-        let price = 0;
+        // let items = 0;
+        // let price = 0;
         if (
             (prevProps.cart !== this.props.cart &&
-                (this.state.totalPrice || this.props.currencyValue)) ||
+                (this.props.totalPrice || this.props.currencyValue)) ||
             prevProps.currencyValue !== this.props.currencyValue
         ) {
-            this.props.cart.forEach((item: any) => {
-                const selectedCurr = item.prices.find((price: any) =>
-                    price.currency.label === this.props.currencyValue
-                        ? price.amount
-                        : price.currency.amount
-                );
+            // this.props.cart.forEach((item: any) => {
+            //     const selectedCurr = item.prices.find((price: any) =>
+            //         price.currency.label === this.props.currencyValue
+            //             ? price.amount
+            //             : price.currency.amount
+            //     );
 
-                items += item.quantity;
-                price += item.quantity * selectedCurr.amount;
-            });
-
-            return this.setState({ totalPrice: price, items });
+            //     items += item.quantity;
+            //     price += item.quantity * selectedCurr.amount;
+            // });
+            this.props.totalPriceHandler();
+            // return this.setState({ totalPrice: price, items });
         }
     }
 
     // ----------------------------------------------------------------
     // ********** CUSTOM FUNCTIONS ************* */
-    changeQuantity = (id: string, quantity: string | number) => {
-        let items = 0;
-        let price = 0;
-        this.props.cart.forEach((item: any) => {
-            const selectedCurr = item.prices.find((price: any) =>
-                price.currency.label === this.props.currencyValue
-                    ? price.amount
-                    : price.currency.amount
-            );
-            if (quantity !== 'inc') {
-                console.log('equal');
-            } else {
-                console.log('not equal');
-            }
-            let quan = item.quantity + 1;
-            if (quantity === 'dec') {
-                quan = item.quantity - 1;
-            }
-            if (item.id === id) {
-                console.log(quantity);
-                item.quantity = quan;
-                price += item.quantity * selectedCurr.amount;
-            }
-        });
-        return this.setState({ totalPrice: price, items });
-    };
 
-    increaseQuantity = (id: string) => {
-        let items = 0;
-        let price = 0;
-        this.props.cart.forEach((item: any) => {
-            const selectedCurr = item.prices.find((price: any) =>
-                price.currency.label === this.props.currencyValue
-                    ? price.amount
-                    : price.currency.amount
+    // - to insure that the item is deleted or decremented from the cart based on conditions
+    decreaseQuantity = (id: string, quantity: number) => {
+        if (quantity === 1) {
+            return (
+                window.confirm('Do you want to remove this item from cart?') === true &&
+                this.props.removeFromCart(id)
             );
-            if (item.id === id) {
-                item.quantity = item.quantity + 1;
-                items += item.quantity;
-                price += item.quantity * selectedCurr.amount;
-            }
-        });
-        return this.setState({ totalPrice: price, items });
-    };
-
-    decreaseQuantity = (id: string) => {
-        let items = 0;
-        let price = 0;
-        this.props.cart.forEach((item: any) => {
-            const selectedCurr = item.prices.find((price: any) =>
-                price.currency.label === this.props.currencyValue
-                    ? price.amount
-                    : price.currency.amount
-            );
-            if (item.id === id) {
-                item.quantity = item.quantity - 1;
-                items += item.quantity;
-                price += item.quantity * selectedCurr.amount;
-            }
-        });
-        if (items === -1 && window.confirm('Are you sure you want to delete this item?')) {
-            return this.props.removeFromCart(id);
         }
-
-        return this.setState({ totalPrice: price, items });
-    };
-
-    removeItem = (id: string) => {
-        if (this.props.cart.length > 0) {
+        if (quantity === 0) {
             return;
         }
-
-        this.props.removeFromCart(id);
+        return this.props.decreaseItemQuantity(id);
     };
 
+    // - Remove item when quantity is 0
+    removeItem = (id: string) => {
+        if (this.props.cart.length === 0) {
+            return this.props.removeFromCart(id);
+        }
+        return console.log('no items');
+    };
+
+    // - Custom function ensures the cart is closed when the user clicks on the cart bag
     goToCartBagClosingCart = () => {
-        this.props.router.navigate('/cart');
+        this.props.router.navigate('/cart/bag');
         this.props.toggleCart(false);
     };
 
+    modalHandler = () => {
+        this.setState({ modalOpen: !this.state.modalOpen });
+        this.props.toggleCart(false);
+    };
     // ----------------------------------------------------------------
     // ********** RENDER ************* */
 
     render() {
         return (
-            <Wrapper class={`cart ${this.props.open && 'opened'}`}>
-                <Wrapper class="cart__wrapper">
-                    <Wrapper class="cart__header">
-                        <h2 className="cart__header--title">
-                            My Bag, <span className="cart__header--subtitle">2 Items</span>
-                        </h2>
-                    </Wrapper>
-                    <Wrapper class="cart__body">
-                        {this.props.cart.map((item: any) => {
-                            return (
-                                <CartCard
-                                    key={item.id}
-                                    id={item.id}
-                                    name={item.name}
-                                    brand={item.brand}
-                                    prices={item.prices}
-                                    img={item.gallery[0]}
-                                    symbol={item.symbol}
-                                    quantity={item.quantity}
-                                    // total={item.total}
-                                    currencyValue={this.props.currencyValue}
-                                    removeItem={() => this.removeItem(item.id)}
-                                    attributes={item.attributes}
-                                    decreaseQuantity={this.decreaseQuantity}
-                                    increaseQuantity={this.increaseQuantity}
-                                />
-                            );
-                        })}
-                    </Wrapper>
-                    <Wrapper class="cart__footer">
-                        <Wrapper class="cart__footer--payment">
-                            <h3 className="cart__footer--total">Total {this.state.items} items</h3>
-                            <h3 className="cart__footer--price">
-                                {this.props.currencySymbol}
-                                {this.state.totalPrice}
-                            </h3>
+            <>
+                <Wrapper class={`cart ${this.props.open && 'opened'}`}>
+                    <Wrapper class="cart__wrapper">
+                        <Wrapper class="cart__header">
+                            <h2 className="cart__header--title">
+                                My Bag,{' '}
+                                <span className="cart__header--subtitle">
+                                    {this.props.cartItems} items
+                                </span>
+                            </h2>
                         </Wrapper>
-                        <Wrapper class="cart__footer--buttons">
-                            <button className="btn btn-bag" onClick={this.goToCartBagClosingCart}>
-                                <p>view bag</p>
-                            </button>
-                            <button className="btn btn-checkout" value="checkout">
-                                <p>Checkout</p>
-                            </button>
+                        <Wrapper class="cart__body">
+                            {this.props.cart.map((item: any) => {
+                                return (
+                                    <CartCard
+                                        key={item.id}
+                                        id={item.id}
+                                        name={item.name}
+                                        brand={item.brand}
+                                        prices={item.prices}
+                                        img={item.gallery[0]}
+                                        symbol={item.symbol}
+                                        quantity={item.quantity}
+                                        totalPrice={item.total}
+                                        currencyValue={this.props.currencyValue}
+                                        selectedAttrs={this.props.selectedAttrs}
+                                        decreaseQuantity={() =>
+                                            this.decreaseQuantity(item.id, item.quantity)
+                                        }
+                                        increaseQuantity={() =>
+                                            this.props.increaseItemQuantity(item.id)
+                                        }
+                                    />
+                                );
+                            })}
+                        </Wrapper>
+                        <Wrapper class="cart__footer">
+                            <Wrapper class="cart__footer--payment">
+                                <h3 className="cart__footer--total">
+                                    Total {this.props.cartItems} items
+                                </h3>
+                                <h3 className="cart__footer--price">
+                                    {this.props.currencySymbol}
+                                    {numberWithCommas(this.props.totalPrice)}
+                                </h3>
+                            </Wrapper>
+                            <Wrapper class="cart__footer--buttons">
+                                <Button
+                                    className="btn btn-bag"
+                                    clicked={this.goToCartBagClosingCart}
+                                >
+                                    <p>view bag</p>
+                                </Button>
+                                <Button
+                                    className="btn btn-checkout"
+                                    value="checkout"
+                                    clicked={this.modalHandler}
+                                >
+                                    <p>Checkout</p>
+                                </Button>
+                            </Wrapper>
                         </Wrapper>
                     </Wrapper>
                 </Wrapper>
-            </Wrapper>
+
+                <Modal open={this.state.modalOpen} modalHandler={this.modalHandler}>
+                    {this.state.modalOpen && (
+                        <Wrapper class="modal-info">
+                            <h2>Total Items:</h2>
+                            <span>{this.props.cartItems}</span>
+                            <h2 style={{ paddingTop: '10px' }}>Total Price:</h2>
+                            <span>
+                                {this.props.currencySymbol}
+                                {numberWithCommas(this.props.totalPrice)}
+                            </span>
+                        </Wrapper>
+                    )}
+                </Modal>
+            </>
         );
     }
 }
@@ -198,11 +197,17 @@ const mapStateToProps = (state: any) => ({
     currencyValue: state.productData.currencyValue,
     currencySymbol: state.productData.currencySymbol,
     cart: state.productData.cart,
-    productsCurrency: state.productData.productsCurrency,
     selectedCurr: state.productData.selectedCurr,
+    totalPrice: state.productData.totalPrice,
+    cartItems: state.productData.cartItems,
+    selectedAttrs: state.productData.selectedAttrs,
 });
 
 const mapDispatchToProps = (dispatch: (arg0: any) => void) => ({
     removeFromCart: (id: string) => dispatch(actions.productData.removeFromCart(id)),
+
+    totalPriceHandler: () => dispatch(actions.productData.totalPriceAndCartItemCount()),
+    increaseItemQuantity: (id: string) => dispatch(actions.productData.increaseItemQuantity(id)),
+    decreaseItemQuantity: (id: string) => dispatch(actions.productData.decreaseItemQuantity(id)),
 });
 export default connect(mapStateToProps, mapDispatchToProps)(withRouter(Cart));
