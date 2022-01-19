@@ -7,6 +7,7 @@ interface ButtonProps {
     className?: string;
     style?: React.CSSProperties;
     clicked?: (args: any) => void;
+    value?: string;
 }
 
 class Button extends Component<ButtonProps> {
@@ -20,6 +21,7 @@ class Button extends Component<ButtonProps> {
                 className={`btn ${this.props.className}`}
                 style={this.props.style}
                 onClick={this.props.clicked}
+                value={this.props.value}
             >
                 {this.props.children}
             </button>
