@@ -1,4 +1,4 @@
-type Attribute = {
+export type Attribute = {
     displayValue: string;
     value: string;
     id: string;
@@ -11,7 +11,7 @@ export type Price = {
     currency: Currency;
     amount: number;
 };
-type Attributes = {
+export type Attributes = {
     id: string;
     name: string;
     type: string;
@@ -28,5 +28,5 @@ export type ProductType = {
     attributes: [Attributes];
     prices: [Price];
     brand: string;
-    quantity: number | undefined;
+    quantity: number;
 };
