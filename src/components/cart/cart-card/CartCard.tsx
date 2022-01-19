@@ -2,7 +2,7 @@
 import React, { Component } from 'react';
 import { numberWithCommas } from '../../../utils/helper-functions/helperFunctions';
 import Wrapper from '../../../utils/Hoc/Wrappers/Wrapper';
-import { Button } from '../../ui/Button';
+// import { Button } from '../../ui/Button';
 //******************************** */
 
 interface CartCardProps {
@@ -11,7 +11,6 @@ interface CartCardProps {
     brand: string;
     prices: object[];
     img: string;
-    symbol: string;
     quantity: number;
     currencyValue: string;
     removeItem?: () => void;
@@ -22,7 +21,7 @@ interface CartCardProps {
     };
     decreaseQuantity: () => void;
     increaseQuantity: () => void;
-    totalPrice: number;
+    totalPrice: number | undefined;
 }
 
 class CartCard extends Component<CartCardProps> {
@@ -57,7 +56,7 @@ class CartCard extends Component<CartCardProps> {
                                     <Wrapper class="radio" key={attribute.id}>
                                         <input
                                             type="radio"
-                                            name="Selected Attribute"
+                                            name={attribute.id}
                                             className="radio-btn"
                                             value={attribute.id}
                                             id={attribute.id}

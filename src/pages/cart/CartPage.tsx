@@ -75,11 +75,10 @@ class CartPage extends Component<CartPageProps, CartPageState> {
                                     brand={item.brand}
                                     prices={item.prices}
                                     img={item.gallery[0]}
-                                    symbol={item.symbol}
                                     quantity={item.quantity}
                                     totalPrice={item.total}
                                     currencyValue={this.props.currencyValue}
-                                    selectedAttrs={this.props.selectedAttrs}
+                                    selectedAttrs={item.selectedAttrs}
                                     increaseQuantity={() =>
                                         this.props.increaseItemQuantity(item.id)
                                     }
