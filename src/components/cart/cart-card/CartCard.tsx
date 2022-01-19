@@ -1,5 +1,6 @@
 //********** IMPORTS ************* */
 import React, { Component } from 'react';
+import { numberWithCommas } from '../../../utils/helper-functions/helperFunctions';
 import Wrapper from '../../../utils/Hoc/Wrappers/Wrapper';
 import { Button } from '../../ui/Button';
 //******************************** */
@@ -13,11 +14,15 @@ interface CartCardProps {
     symbol: string;
     quantity: number;
     currencyValue: string;
-    removeItem: () => void;
-    attributes?: any;
-    // changeQuantity: (id: string | undefined, quantity: number | string) => void;
-    decreaseQuantity: (id: string) => void;
-    increaseQuantity: (id: string) => void;
+    removeItem?: () => void;
+    selectedAttrs: {
+        [key: string]: {
+            [key: string]: string;
+        };
+    };
+    decreaseQuantity: () => void;
+    increaseQuantity: () => void;
+    totalPrice: number;
 }
 
 class CartCard extends Component<CartCardProps> {
@@ -26,27 +31,10 @@ class CartCard extends Component<CartCardProps> {
         this.state = {};
     }
 
-    // increaseQuantity = () => {
-    //     this.props.changeQuantity(this.props.id, this.props.quantity + 1);
-    // };
-    // decreaseQuantity = () => {
-    //     this.props.changeQuantity(this.props.id, this.props.quantity - 1);
-    //     this.props.removeItem();
-    // };
-
-    // quantityHandler = (operator: string | number) => {
-    //     if (operator === 'inc') {
-    //         return this.props.changeQuantity(this.props.id, operator);
-    //     }
-    //     if (operator === 'dec') {
-    //         this.props.changeQuantity(this.props.id, operator);
-    //     }
-    // };
-
     // ----------------------------------------------------------------
     // **************** RENDER ***************** */
     render() {
-        const { id, name, brand, prices, img, quantity, attributes } = this.props;
+        const { name, brand, prices, img, quantity, selectedAttrs, totalPrice } = this.props;
 
         const selectedCurrency: any = prices.find(
             (prices: any) => prices.currency.label === this.props.currencyValue
@@ -58,35 +46,39 @@ class CartCard extends Component<CartCardProps> {
                         <span className="brand">{name}</span>
                         <span>{brand}</span>
                     </h3>
-                    <p className="cart__card--price">
-                        {selectedCurrency?.currency?.symbol}
-                        {selectedCurrency?.amount}
+                    <p className={`cart__card--price ${!selectedAttrs ? 'mb-10' : ''}`}>
+                        {selectedCurrency.currency.symbol}
+                        {numberWithCommas(totalPrice)}
                     </p>
-                    <Wrapper class="cart__card--buttons">
-                        {Object.values(attributes)?.map((attribute: any) => {
-                            return (
-                                <Button
-                                    className={attribute.value.includes('#') ? 'color' : ''}
-                                    key={attribute.id}
-                                    style={{
-                                        backgroundColor: attribute.value,
-                                        border: '1px solid' + attribute.value,
-                                    }}
-                                >
-                                    <span>
-                                        {attribute.value?.includes('#') ? '' : attribute.value}
-                                    </span>
-                                </Button>
-                            );
-                        })}
-                    </Wrapper>
+                    {selectedAttrs ? (
+                        <Wrapper class="cart__card--buttons">
+                            {Object.values(selectedAttrs)?.map((attribute: any) => {
+                                return (
+                                    <Button
+                                        className={
+                                            attribute.value.includes('#') ? 'color' : 'btn-norm'
+                                        }
+                                        key={attribute.id}
+                                        style={{
+                                            backgroundColor: attribute.value,
+                                            border: '1px solid' + attribute.value,
+                                        }}
+                                    >
+                                        <span>
+                                            {attribute.value?.includes('#') ? '' : attribute.value}
+                                        </span>
+                                    </Button>
+                                );
+                            })}
+                        </Wrapper>
+                    ) : null}
                 </Wrapper>
                 <Wrapper class="cart__card--right">
                     <Wrapper class="cart__card--btn">
                         <button
                             className="btn btn-norm"
                             value="inc"
-                            onClick={() => this.props.increaseQuantity(id)}
+                            onClick={this.props.increaseQuantity}
                         >
                             +
                         </button>
@@ -94,7 +86,7 @@ class CartCard extends Component<CartCardProps> {
                         <button
                             className="btn btn-norm"
                             value="dec"
-                            onClick={() => this.props.decreaseQuantity(id)}
+                            onClick={this.props.decreaseQuantity}
                         >
                             −
                         </button>
@@ -107,4 +99,4 @@ class CartCard extends Component<CartCardProps> {
         );
     }
 }
-export { CartCard };
+export default React.memo(CartCard);
