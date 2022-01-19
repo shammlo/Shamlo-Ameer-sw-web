@@ -52,22 +52,33 @@ class CartCard extends Component<CartCardProps> {
                     </p>
                     {selectedAttrs ? (
                         <Wrapper class="cart__card--buttons">
-                            {Object.values(selectedAttrs)?.map((attribute: any) => {
+                            {Object.values(selectedAttrs)?.map((attribute: any, index: number) => {
                                 return (
-                                    <Button
-                                        className={
-                                            attribute.value.includes('#') ? 'color' : 'btn-norm'
-                                        }
-                                        key={attribute.id}
-                                        style={{
-                                            backgroundColor: attribute.value,
-                                            border: '1px solid' + attribute.value,
-                                        }}
-                                    >
-                                        <span>
-                                            {attribute.value?.includes('#') ? '' : attribute.value}
-                                        </span>
-                                    </Button>
+                                    <Wrapper class="radio" key={attribute.id}>
+                                        <input
+                                            type="radio"
+                                            name="Selected Attribute"
+                                            className="radio-btn"
+                                            value={attribute.id}
+                                            id={attribute.id}
+                                            defaultChecked={index === 0 ? true : false}
+                                        />
+                                        <label
+                                            className={`radio-label ${
+                                                attribute.value.includes('#') ? 'colored' : 'sized'
+                                            }`}
+                                            htmlFor={attribute.id}
+                                            style={{
+                                                backgroundColor: attribute.value,
+                                            }}
+                                        >
+                                            <span>
+                                                {attribute.value.includes('#')
+                                                    ? ''
+                                                    : attribute.value}
+                                            </span>
+                                        </label>
+                                    </Wrapper>
                                 );
                             })}
                         </Wrapper>
