@@ -1,13 +1,13 @@
 //********** IMPORTS ************* */
-import { Component } from 'react';
+import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Wrapper from '../../utils/Hoc/Wrappers/Wrapper';
 import Cart from '../cart/Cart';
 import { Icon } from '../icon/Icon';
 import { Navigation } from '../navigation/Navigation';
 import * as actions from '../../store/actions/Actions';
-
-// import { ProductType } from '../../store/types';
+import { ProductType } from '../../store/types';
+import { Link } from 'react-router-dom';
 //******************************** */
 interface HeaderState {
     currencyDropdown: boolean;
@@ -17,36 +17,38 @@ interface HeaderProps {
     toggleCart: (opened: boolean | undefined) => boolean | void;
     cartOpen: boolean;
     currency: [{ symbol: string; label: string }];
-    products: any;
+    products: ProductType;
     cart: object[];
     currencySymbol: string;
     changeCurrency: (currency: string, symbol: string) => void;
-    // notificationCounter: (number: number) => void;
     notificationCount: number;
 }
 
 class Header extends Component<HeaderProps, HeaderState> {
+    currencyDrop: React.RefObject<any>;
     constructor(props: HeaderProps) {
         super(props);
         this.state = {
             currencyDropdown: false,
             count: 0,
         };
+        this.currencyDrop = React.createRef();
+    }
+    componentDidMount() {
+        document.addEventListener('click', this.toggleCurrencyDropdown.bind(this), true);
     }
 
-    // componentDidUpdate(prevProps: any) {
-    //     let currentCount = 0;
-    //     if (prevProps.cart !== this.props.cart) {
-    //         this.props.cart?.forEach((item: any) => {
-    //             currentCount += item?.quantity;
-    //         });
-    //         // this.setState({ count: currentCount });
-    //         this.props.notificationCounter(currentCount);
-    //     }
-    // }
+    componentWillUnmount() {
+        document.removeEventListener('click', this.toggleCurrencyDropdown.bind(this), true);
+    }
 
-    toggleCurrencyDropdown = () =>
-        this.setState({ currencyDropdown: !this.state.currencyDropdown });
+    toggleCurrencyDropdown = (event: Event) => {
+        if (this.currencyDrop.current && !this.currencyDrop.current.contains(event.target)) {
+            this.setState({ currencyDropdown: false });
+        } else if (this.currencyDrop.current && this.currencyDrop.current.contains(event.target)) {
+            this.setState({ currencyDropdown: true });
+        }
+    };
 
     render() {
         return (
@@ -55,13 +57,16 @@ class Header extends Component<HeaderProps, HeaderState> {
                     <Wrapper class="header__wrapper">
                         <Navigation toggleCart={this.props.toggleCart} />
                         <Wrapper class="header__logo">
-                            <Icon title="logo" />
+                            <Link to="/category/all">
+                                <Icon title="logo" />
+                            </Link>
                         </Wrapper>
 
                         <Wrapper class="header__action ">
-                            <Wrapper
-                                class="header__action--currency"
-                                clicked={this.toggleCurrencyDropdown}
+                            <div
+                                className="header__action--currency"
+                                // onClick={this.toggleCurrencyDropdown}
+                                ref={this.currencyDrop}
                             >
                                 <p>{this.props.currencySymbol}</p>
                                 <Icon
@@ -98,7 +103,7 @@ class Header extends Component<HeaderProps, HeaderState> {
                                         )}
                                     </ul>
                                 </Wrapper>
-                            </Wrapper>
+                            </div>
                             <Wrapper
                                 class="header__action--cart"
                                 clicked={() => this.props.toggleCart(undefined)}
@@ -125,7 +130,7 @@ class Header extends Component<HeaderProps, HeaderState> {
 // ----------------------------------------------------------------
 const mapStateToProps = (state: {
     productData: {
-        products: any;
+        products: ProductType;
         currency: [{ symbol: string; label: string }];
         cart: object[];
         currencySymbol: string;
