@@ -4,6 +4,8 @@ import { call, put } from 'redux-saga/effects';
 import * as actions from '../../actions/Actions';
 // ******************************** */
 
+// Note: This is the best way i know to query over graphql data, my way was just fetching the data,
+// and then filtering it by category name in redux.
 interface Params {
     type: string;
     payload: {
@@ -11,18 +13,16 @@ interface Params {
         categoryName?: string | undefined;
     };
 }
-type par = {
+type apiParams = {
     payload: {
         productId?: string | undefined;
         categoryName?: string | undefined;
     };
 };
 
-//     payload: { productId = '', categoryName = 'all' },
-// }: APItype
 const apiCall = async ({
     payload: { productId = '', categoryName = 'all' },
-}: par): Promise<any> => {
+}: apiParams): Promise<any> => {
     const graphqlQuery = {
         query: `
                 query($productId: String!, $input: CategoryInput) {
@@ -142,10 +142,8 @@ function* getProductsSaga(action: Params): Generator {
                 categoryName: action.payload.categoryName,
             },
         });
-        console.log(data);
         yield put(actions.productData.fetchProductsSuccess(data, action.payload.categoryName));
     } catch (error) {
-        console.log('Error getting products:', error);
         yield put(actions.productData.fetchProductsFailure(error));
     }
 }
