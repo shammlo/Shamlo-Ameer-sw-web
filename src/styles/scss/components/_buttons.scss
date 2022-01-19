@@ -26,7 +26,7 @@
             -webkit-box-sizing: border-box;
             -moz-box-sizing: border-box;
             box-sizing: border-box;
-
+            box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
             span {
                 font-family: sans-serif;
                 font-style: normal;
@@ -34,6 +34,9 @@
                 font-size: 16px;
                 line-height: 18px;
             }
+        }
+        &-label[for='White'] {
+            border: 1px solid rgb(233, 233, 233);
         }
         &-label.sized {
             border: 1px solid #1d1f22;
