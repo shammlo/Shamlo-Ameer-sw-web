@@ -9,6 +9,7 @@ import { productsSaga } from './sagas/rootSaga';
 const sagaMiddleware = createSagaMiddleware();
 const middleware = [sagaMiddleware];
 
+// - disabling redux-logger for production
 if (process.env.NODE_ENV === 'development') {
     const { createLogger } = require('redux-logger');
     middleware.push(createLogger());
