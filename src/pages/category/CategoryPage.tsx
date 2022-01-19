@@ -1,26 +1,24 @@
 //********** IMPORTS ************* */
-import { Component } from 'react';
+import React, { Component } from 'react';
 import { Card } from '../../components/card/Card';
 import Wrapper from '../../utils/Hoc/Wrappers/Wrapper';
 import { connect } from 'react-redux';
-import { ProductType } from '../../store/types';
-import { Loader } from '../../utils/loader/Loader';
+import { ProductType, Price } from '../../store/types';
 import * as actions from '../../store/actions/Actions';
 import { withRouter } from '../../utils/Hoc/withParams';
-import React from 'react';
 //******************************** */
 interface CategoryPageState {
     inStock: boolean;
     category: string | null;
     currentPage: number;
     productsPerPage: number;
+    categoryName: string;
 }
 
 interface CategoryPageProps {
     products: [ProductType];
     productName: string;
     currencyValue: string;
-    selectedCurr: any;
     categories: [
         {
             [key: string]: {
@@ -40,20 +38,24 @@ class CategoryPage extends Component<CategoryPageProps, CategoryPageState> {
             category: null,
             currentPage: 1,
             productsPerPage: 6,
+            categoryName: '',
         };
     }
 
     componentDidUpdate(prevProps: CategoryPageProps) {
-        if (this.state.category !== this.props.router.params.categoryName) {
+        if (
+            this.state.category !== this.props.router.params.categoryName ||
+            prevProps.router.params.categoryName !== this.props.router.params.categoryName
+        ) {
             this.setState({
                 category: this.props.router.params.categoryName,
             });
+
             this.props.categoryChanged(this.props.router.params.categoryName);
         }
     }
     // ----------------------------------------------------------------
-    changePagination = (id: number) => {
-        // console.log(event.target.id);
+    changePagination = <T extends number>(id: T) => {
         this.setState({
             currentPage: id,
         });
@@ -67,42 +69,23 @@ class CategoryPage extends Component<CategoryPageProps, CategoryPageState> {
         const indexOfLastProduct = currentPage * productsPerPage;
         const indexOfFirstProduct = indexOfLastProduct - productsPerPage;
         const currentProducts = this.props.products.slice(indexOfFirstProduct, indexOfLastProduct);
-
         const pageNumbers = [];
         for (let i = 1; i <= Math.ceil(this.props.products.length / productsPerPage); i++) {
             pageNumbers.push(i);
         }
 
-        const renderPageNumbers = pageNumbers.map((number: any) => {
+        const renderPageNumbers = pageNumbers.map((number: number) => {
+            let active = number === this.state.currentPage ? 'active' : '';
+
             return (
                 <li
                     key={number}
-                    className="category__pagination--item"
-                    id={number}
+                    className={`category__pagination--item ${active}`}
+                    id={`${number}`}
                     onClick={() => this.changePagination(number)}
                 >
                     <span>{number}</span>
                 </li>
-            );
-        });
-        const renderProducts = currentProducts.map((product: ProductType, index: number) => {
-            const selectedCurrency = product.prices.find((price: any) =>
-                price.currency.label === this.props.currencyValue
-                    ? price.amount
-                    : price.currency.amount
-            );
-            return (
-                <React.Fragment key={product.id}>
-                    <Card
-                        key={product.id}
-                        text={product.name}
-                        price={selectedCurrency?.amount}
-                        img={product.gallery[0]}
-                        inStock={product.inStock}
-                        id={product.id}
-                        symbol={selectedCurrency?.currency.symbol}
-                    />
-                </React.Fragment>
             );
         });
 
@@ -112,10 +95,29 @@ class CategoryPage extends Component<CategoryPageProps, CategoryPageState> {
             <Wrapper class="category">
                 <Wrapper class="container">
                     <Wrapper class="category__title">
-                        <h1 className="category__title--text">{this.props.productName} products</h1>
+                        <h2 className="category__title--text">{this.props.productName} products</h2>
                     </Wrapper>
 
-                    <Wrapper class="category__cards">{renderProducts}</Wrapper>
+                    <Wrapper class="category__cards">
+                        {currentProducts?.map((product: ProductType) => {
+                            const selectedCurrency = product.prices.find((price: Price) => {
+                                return price.currency.label === this.props.currencyValue
+                                    ? price.amount
+                                    : 0;
+                            });
+                            return (
+                                <Card
+                                    key={product.id}
+                                    text={product.name}
+                                    price={selectedCurrency?.amount}
+                                    img={product.gallery[0]}
+                                    inStock={product.inStock}
+                                    id={product.id}
+                                    symbol={selectedCurrency?.currency.symbol}
+                                />
+                            );
+                        })}
+                    </Wrapper>
                     <Wrapper class="category__pagination">
                         <ul className="category__pagination--list">{renderPageNumbers}</ul>
                     </Wrapper>
@@ -130,7 +132,6 @@ const mapStateToProps = (state: {
         products: [ProductType];
         productName: string;
         currencyValue: string;
-        selectedCurr: any;
         selectedCategory: string;
         categories: [
             {
@@ -145,7 +146,6 @@ const mapStateToProps = (state: {
         products: state.productData.products,
         productName: state.productData.productName,
         currencyValue: state.productData.currencyValue,
-        selectedCurr: state.productData.selectedCurr,
         selectedCategory: state.productData.selectedCategory,
         categories: state.productData.categories,
     };
