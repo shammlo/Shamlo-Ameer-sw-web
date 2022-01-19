@@ -38,15 +38,29 @@
     .main {
         transition: all 0.2s ease-in-out;
     }
-    .main.cart-open .backdrop {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        margin-top: var(--header-height);
-        background: rgba(57, 55, 72, 0.22);
-        z-index: 5;
+    .main.cart-open {
+        overflow-y: hidden;
+        height: calc(100vh - var(--header-height));
+        .backdrop {
+            position: fixed;
+
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            overflow-y: hidden;
+            &-filter {
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                // background-color: rgba(34, 41, 47, 0.5);
+                margin-top: var(--header-height);
+                background: rgba(57, 55, 72, 0.22);
+                z-index: 5;
+            }
+        }
     }
 }
 

@@ -60,7 +60,9 @@ class Layout extends Component<LayoutProps, LayoutState> {
                 <main className={`main ${this.state.cartOpen ? 'cart-open' : ''}`}>
                     {this.props.children}
                     {this.state.cartOpen && (
-                        <Wrapper class="backdrop" clicked={() => this.toggleCart(false)}></Wrapper>
+                        <Wrapper class="backdrop" clicked={() => this.toggleCart(false)}>
+                            <Wrapper class="backdrop-filter"></Wrapper>
+                        </Wrapper>
                     )}
                 </main>
             </Wrapper>
