@@ -1,0 +1,103 @@
+.app .main .cartPage {
+    padding-top: 70px;
+    padding-bottom: 50px;
+
+    font-family: Raleway;
+    font-style: normal;
+
+    --width: 80%;
+    @include mq($bp-900) {
+        --width: 100%;
+    }
+    &__title {
+        font-weight: bold;
+        font-size: 25px;
+        line-height: 40px;
+        padding-bottom: 50px;
+        text-transform: uppercase;
+
+        // display: flex;
+        // align-items: center;
+        // justify-content: space-between;
+    }
+
+    .cart__card {
+        width: var(--width);
+        padding: 20px 0;
+        margin-top: 10px;
+        border-top: 1px solid #e5e5e5;
+
+        &--price {
+            font-size: 20px;
+        }
+        &--buttons .btn {
+            width: 63px;
+            height: 45px;
+        }
+        &--title {
+            font-weight: normal;
+            font-size: 25px;
+            line-height: 27px;
+            display: flex;
+            flex-direction: column;
+            max-width: inherit;
+            & > .brand {
+                font-weight: 600;
+                padding-bottom: 20px;
+            }
+        }
+        .cart__card--right {
+            .cart__card--btn {
+                padding-right: 20px;
+
+                .btn {
+                    width: 45px;
+                    height: 45px;
+                }
+            }
+            .cart__card--img {
+                width: 145px;
+                height: 185px;
+                img {
+                    height: 100%;
+                    width: 100%;
+                }
+            }
+        }
+    }
+
+    &__checkout {
+        width: var(--width);
+        margin-top: 10px;
+        border-top: 1px solid #e5e5e5;
+        padding: 20px 0;
+
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        &--info {
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            font-family: Roboto;
+            h2 {
+                padding-right: 20px;
+                font-size: 18px;
+                font-weight: 500;
+            }
+            span {
+                font-size: 18px;
+                font-weight: 600;
+            }
+        }
+
+        &--button {
+            width: 200px;
+            .btn {
+                width: 100%;
+                font-size: 16px;
+            }
+        }
+    }
+}

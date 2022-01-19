@@ -1,0 +1,118 @@
+.app {
+    .radio {
+        &-btn {
+            &:checked + label {
+                background-color: var(--c-black);
+                color: var(--c-white);
+            }
+
+            &:checked + .radio-label.colored {
+                opacity: 1;
+                outline: 1px solid var(--c-black);
+            }
+            display: none;
+        }
+
+        &-label {
+            position: relative;
+            background-color: var(--c-white);
+            color: var(--c-black);
+            text-align: center;
+            transition: all 0.2s ease-in-out;
+            // line-height: 150px;
+            display: block;
+            cursor: pointer;
+            // border: 3px solid transparent;
+            -webkit-box-sizing: border-box;
+            -moz-box-sizing: border-box;
+            box-sizing: border-box;
+
+            span {
+                font-family: sans-serif;
+                font-style: normal;
+                font-weight: normal;
+                font-size: 16px;
+                line-height: 18px;
+            }
+        }
+        &-label.sized {
+            border: 1px solid #1d1f22;
+            padding: 10px 15px;
+            width: fit-content;
+        }
+
+        &-label.colored {
+            padding: 20px;
+            opacity: 1;
+        }
+    }
+    .btn {
+        width: 27px;
+        height: 27px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+    }
+
+    .btn-norm {
+        border: 1px solid #a6a6a6;
+        background-color: #ededed;
+        color: #a6a6a6;
+        min-width: 28.5px;
+        &:checked,
+        &[value='inc'],
+        &[value='dec'] {
+            background-color: var(--c-white);
+            color: var(--c-black);
+            border: 1px solid rgba(29, 31, 34, 1);
+        }
+
+        &:active,
+        &:focus,
+        &:visited {
+            background-color: var(--c-white);
+            color: var(--c-black);
+            border: 1px solid var(--c-black);
+        }
+    }
+
+    .btn-size {
+        padding: 25px;
+
+        background-color: var(--c-white);
+        color: var(--c-black);
+        border: 1px solid rgba(29, 31, 34, 1);
+
+        span {
+            font-family: sans-serif;
+            font-style: normal;
+            font-weight: normal;
+            font-size: 16px;
+            line-height: 18px;
+        }
+
+        &:active,
+        &:focus,
+        &:visited {
+            background-color: var(--c-black);
+            color: var(--c-white);
+        }
+    }
+
+    .btn.btn-bag,
+    .btn.btn-checkout {
+        padding: 16px 32px;
+        width: 140px;
+        height: 43px;
+        background: #ffffff;
+        border: 1px solid #1d1f22;
+    }
+
+    .btn.btn-checkout {
+        background: var(--c-primary);
+        border: 1px solid var(--c-primary);
+
+        color: var(--c-white);
+    }
+}

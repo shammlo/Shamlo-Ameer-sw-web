@@ -1,0 +1,57 @@
+.app {
+    font-size: inherit;
+    font-weight: inherit;
+    color: inherit;
+    .container {
+        max-width: 145rem;
+        margin: 0 auto;
+        color: inherit;
+        font-size: inherit;
+        font-weight: inherit;
+        @include mq($bp-1550) {
+            max-width: 1180px;
+        }
+        @include mq($bp-1400) {
+            max-width: 1000px;
+        }
+
+        @include mq($bp-1200) {
+            max-width: 900px;
+        }
+
+        @include mq($bp-1000) {
+            max-width: 750px;
+        }
+        @include mq($bp-900) {
+            max-width: 700px;
+        }
+        @include mq($bp-767) {
+            max-width: 600px;
+        }
+        @include mq($bp-650) {
+            max-width: 100%;
+            padding-left: 3rem;
+            padding-right: 3rem;
+        }
+    }
+
+    .main {
+        transition: all 0.2s ease-in-out;
+    }
+    .main.cart-open .backdrop {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        margin-top: var(--header-height);
+        background: rgba(57, 55, 72, 0.22);
+        z-index: 5;
+    }
+}
+
+#__root {
+    color: inherit;
+    font-weight: inherit;
+    font-size: inherit;
+}

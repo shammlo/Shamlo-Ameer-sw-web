@@ -4,13 +4,17 @@
         padding-bottom: 50px;
 
         &__title {
-            font-family: Raleway, sans-serif;
-            font-size: 2rem;
-            font-weight: normal;
             color: var(--c-black);
             margin-bottom: 1rem;
-            text-transform: capitalize;
 
+            &--text {
+                font-family: Raleway;
+                font-style: normal;
+                font-weight: normal;
+                font-size: 42px;
+                text-transform: capitalize;
+                line-height: 160%;
+            }
             &--selection {
                 display: flex;
                 align-items: center;
@@ -120,6 +124,9 @@
                 }
 
                 &:hover {
+                    background-color: #f1f1f177;
+                }
+                &.active {
                     background-color: #f1f1f1;
                 }
             }

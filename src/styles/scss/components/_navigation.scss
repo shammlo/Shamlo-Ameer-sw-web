@@ -1,0 +1,56 @@
+.app .header .nav {
+    &__list {
+        display: flex;
+        align-items: center;
+        list-style: none;
+    }
+    &__item {
+        text-transform: uppercase;
+
+        text-align: center;
+        font-family: Raleway;
+        font-style: normal;
+        font-weight: 600;
+        font-size: 16px;
+        line-height: 120%;
+        cursor: pointer;
+        &:not(:last-child) {
+            margin-right: 1rem;
+        }
+
+        &--link {
+            padding: 1.5rem 1.2rem;
+            position: relative;
+        }
+
+        &--title {
+            font-size: inherit;
+            font-weight: inherit;
+            color: inherit;
+            font-weight: inherit;
+        }
+    }
+
+    &__item {
+        &--link.active {
+            position: relative;
+            color: var(--c-primary);
+            &::after {
+                content: '';
+                display: block;
+                position: absolute;
+                bottom: -8px;
+                left: 0;
+                height: 2.8px;
+                width: 100%;
+                background-color: var(--c-primary);
+            }
+        }
+
+        &:hover {
+            .nav__item--link {
+                color: var(--c-primary);
+            }
+        }
+    }
+}

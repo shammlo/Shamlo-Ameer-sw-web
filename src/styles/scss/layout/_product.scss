@@ -1,0 +1,234 @@
+.app .main .product {
+    padding-top: 70px;
+    padding-bottom: 50px;
+    &__wrapper {
+        display: flex;
+        justify-content: space-between;
+        // align-items: center;
+        column-gap: 25px;
+        max-height: 530px;
+
+        @include mq($bp-900) {
+            flex-direction: column;
+            align-items: center;
+            max-height: none;
+        }
+    }
+
+    &__left {
+        overflow-y: scroll;
+        padding-right: 5px;
+        @include mq($bp-900) {
+            overflow-y: unset;
+        }
+        &::-webkit-scrollbar {
+            width: 10px;
+        }
+        &::-webkit-scrollbar-track {
+            background: var(--dark-4);
+            border-radius: 4px;
+        }
+        &::-webkit-scrollbar-thumb {
+            cursor: pointer;
+            background-color: #d3d3d3;
+
+            border-radius: 4px;
+            border: 3px solid #d3d3d3;
+
+            &:hover {
+                background-color: #c0c0c0;
+                border: 3px solid #c0c0c0;
+            }
+        }
+        .product__gallery {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            row-gap: 10px;
+            max-width: calc(80px + 5px);
+
+            @include mq($bp-900) {
+                flex-direction: row;
+
+                img {
+                    &:not(:last-child) {
+                        margin-right: 40px;
+                    }
+                }
+            }
+            img {
+                transition: transform 0.3s ease-in-out;
+                // - just for testing.
+                // &:hover {
+                //     transform: rotate(360deg);
+                // }
+                cursor: pointer;
+            }
+        }
+    }
+    &__middle {
+        // width: 800px;
+        img {
+            max-width: 610px;
+            margin: 0 auto;
+            max-height: 530px;
+        }
+    }
+    &__right {
+        align-self: left;
+        width: 500px;
+        .product__info {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            // align-items: center;
+            padding: 0 20px;
+            height: 100%;
+            max-width: 300px;
+            @include mq($bp-900) {
+                max-width: unset;
+                row-gap: 30px;
+            }
+            &--header {
+                font-family: Raleway;
+                font-style: normal;
+                line-height: 27px;
+
+                @include mq($bp-900) {
+                    font-size: 22px;
+                }
+                // font-size: 3rem;
+
+                h2 {
+                    font-weight: 600;
+                }
+                h3 {
+                    padding-top: 10px;
+                    font-weight: normal;
+                    font-size: 30px;
+                }
+            }
+
+            &--sizes {
+                // display: flex;
+                // flex-direction: column;
+                // align-items: center;
+                position: relative;
+
+                h2 {
+                    padding-bottom: 10px;
+                    font-family: Roboto Condensed;
+                    font-style: normal;
+                    font-weight: bold;
+                    font-size: 18px;
+                    line-height: 18px;
+                    @include mq($bp-900) {
+                        font-size: 24px;
+                        padding-bottom: 15px;
+                    }
+                }
+
+                .attribute {
+                    @include mq($bp-900) {
+                        .radio .radio-label {
+                            padding: 12.5px 17.5px;
+
+                            span {
+                                font-size: 20px;
+                            }
+                        }
+                    }
+                    &:not(:last-child) {
+                        margin-bottom: 10px;
+                    }
+
+                    & div .radio {
+                        &:not(:last-child) {
+                            margin-right: 10px;
+                        }
+                    }
+                }
+                .btn-size {
+                    padding: 25px 30px;
+                    &:not(:last-child) {
+                        margin-right: 10px;
+                    }
+                }
+            }
+
+            &--toCart {
+                .btn {
+                    width: 100%;
+                }
+
+                @include mq($bp-900) {
+                    .btn-checkout {
+                        font-size: 20px;
+                        padding: 25px 32px;
+                    }
+                }
+            }
+            &--price {
+                font-family: Roboto Condensed;
+                font-style: normal;
+                font-weight: bold;
+                font-size: 18px;
+                line-height: 18px;
+                padding: 15px 0;
+
+                h2 {
+                    padding: 25px 0;
+                    @include mq($bp-900) {
+                        padding: 10px 0;
+                        margin-bottom: 15px;
+                    }
+                }
+                span {
+                    font-family: Roboto;
+                    font-style: normal;
+                    font-weight: bold;
+                    font-size: 24px;
+                    line-height: 18px;
+                    @include mq($bp-900) {
+                        font-size: 26px;
+                    }
+                }
+            }
+
+            &--description {
+                font-family: Roboto;
+                font-style: normal;
+                font-weight: normal;
+
+                line-height: 159.96%;
+                padding-top: 25px;
+                h1 {
+                    font-size: 20px;
+                    padding-bottom: 5px;
+                }
+                p {
+                    font-size: 16px;
+                }
+            }
+        }
+    }
+
+    .attr-warning {
+        position: absolute;
+        top: 100%;
+        left: 0;
+        width: 100%;
+        background-color: rgba(255, 159, 67, 0.12);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 5px 0;
+        border-radius: 6px;
+        margin-top: 10px;
+        h2 {
+            color: #ff9f43;
+            padding: 0;
+        }
+    }
+}
