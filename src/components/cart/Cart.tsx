@@ -89,10 +89,10 @@ class Cart extends Component<CartProps, CartState> {
 
     // - Remove item when quantity is 0
     removeItem = (id: string) => {
-        if (this.props.cart.length === 0) {
-            return this.props.removeFromCart(id);
+        if (this.props.cart.length > 0) {
+            return;
         }
-        return console.log('no items');
+        return this.props.removeFromCart(id);
     };
 
     // - Custom function ensures the cart is closed when the user clicks on the cart bag
