@@ -48,25 +48,12 @@ class Cart extends Component<CartProps, CartState> {
     }
 
     componentDidUpdate(prevProps: CartProps) {
-        // let items = 0;
-        // let price = 0;
         if (
             (prevProps.cart !== this.props.cart &&
                 (this.props.totalPrice || this.props.currencyValue)) ||
             prevProps.currencyValue !== this.props.currencyValue
         ) {
-            // this.props.cart.forEach((item: any) => {
-            //     const selectedCurr = item.prices.find((price: any) =>
-            //         price.currency.label === this.props.currencyValue
-            //             ? price.amount
-            //             : price.currency.amount
-            //     );
-
-            //     items += item.quantity;
-            //     price += item.quantity * selectedCurr.amount;
-            // });
             this.props.totalPriceHandler();
-            // return this.setState({ totalPrice: price, items });
         }
     }
 
@@ -131,11 +118,11 @@ class Cart extends Component<CartProps, CartState> {
                                         brand={item.brand}
                                         prices={item.prices}
                                         img={item.gallery[0]}
-                                        symbol={item.symbol}
+                                        // symbol={item.symbol}
                                         quantity={item.quantity}
                                         totalPrice={item.total}
                                         currencyValue={this.props.currencyValue}
-                                        selectedAttrs={this.props.selectedAttrs}
+                                        selectedAttrs={item.selectedAttrs}
                                         decreaseQuantity={() =>
                                             this.decreaseQuantity(item.id, item.quantity)
                                         }
