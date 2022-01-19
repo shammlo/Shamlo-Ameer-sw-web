@@ -9,6 +9,7 @@ import { Backdrop } from './Backdrop';
 interface ModalProps {
     open: boolean;
     modalHandler: () => void;
+    main?: boolean;
 }
 
 class Modal extends Component<ModalProps> {
@@ -17,7 +18,7 @@ class Modal extends Component<ModalProps> {
         this.state = {};
     }
     render() {
-        const { open, modalHandler, children } = this.props;
+        const { open, modalHandler, children, main } = this.props;
         return (
             <Wrapper
                 class="modal"
@@ -32,7 +33,7 @@ class Modal extends Component<ModalProps> {
                         <Wrapper class="modal-close" clicked={modalHandler}>
                             <Icon title="close" />
                         </Wrapper>
-                        <p>Note: Another way is create a checkout page instead.</p>
+                        {!main && <p>Note: Another way is create a checkout page instead.</p>}
                         {children}
                     </Wrapper>
                 </Wrapper>
