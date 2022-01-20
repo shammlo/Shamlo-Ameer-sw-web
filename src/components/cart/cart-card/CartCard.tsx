@@ -45,7 +45,7 @@ class CartCard extends Component<CartCardProps> {
                         <span className="brand">{name}</span>
                         <span>{brand}</span>
                     </h3>
-                    <p className={`cart__card--price ${!selectedAttrs ? 'mb-10' : ''}`}>
+                    <p className={`cart__card--price ${selectedAttrs ? 'mb-10' : ''}`}>
                         {selectedCurrency.currency.symbol}
                         {numberWithCommas(totalPrice)}
                     </p>
