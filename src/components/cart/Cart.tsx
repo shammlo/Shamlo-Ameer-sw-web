@@ -135,9 +135,7 @@ class Cart extends Component<CartProps, CartState> {
                         </Wrapper>
                         <Wrapper class="cart__footer">
                             <Wrapper class="cart__footer--payment">
-                                <h3 className="cart__footer--total">
-                                    Total {this.props.cartItems} items
-                                </h3>
+                                <h3 className="cart__footer--total">Total</h3>
                                 <h3 className="cart__footer--price">
                                     {this.props.currencySymbol}
                                     {numberWithCommas(this.props.totalPrice)}
