@@ -39,7 +39,7 @@ const productData = {
         },
     }),
 
-    addToCart: (id: string, attributes: string[]) => ({
+    addToCart: (id: string, attributes: string[] | undefined) => ({
         type: actionTypes.ADD_TO_CART,
         payload: {
             id: id,
