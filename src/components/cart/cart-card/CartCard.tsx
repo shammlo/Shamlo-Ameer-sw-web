@@ -56,7 +56,7 @@ class CartCard extends Component<CartCardProps> {
                                     <Wrapper class="radio" key={attribute.id}>
                                         <input
                                             type="radio"
-                                            name={attribute.id}
+                                            name="Selected"
                                             className="radio-btn"
                                             value={attribute.id}
                                             id={attribute.id}
