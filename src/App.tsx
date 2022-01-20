@@ -32,8 +32,6 @@ class App extends Component<AppProps, AppState> {
     }
     // ----------------------------------------------------------------
     render() {
-        // Deleting later and replacing with api call
-
         return (
             <Layout>
                 <Routes>
