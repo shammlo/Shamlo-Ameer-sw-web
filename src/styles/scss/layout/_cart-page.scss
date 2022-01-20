@@ -76,6 +76,10 @@
         justify-content: space-between;
         align-items: center;
 
+        @include mq($bp-650) {
+            flex-direction: column;
+            row-gap: 20px;
+        }
         &--info {
             font-weight: 500;
             display: flex;
