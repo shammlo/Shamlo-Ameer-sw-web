@@ -183,14 +183,6 @@ const productReducer = (state = initialState, action: Actions) => {
             };
 
         // ----------------------------------------------------------------
-        // *** NOTIFICATION COUNT ***
-        // case actionTypes.NOTIFICATION_COUNTER:
-        //     return {
-        //         ...state,
-        //         notificationCount: action.payload.count,
-        //     };
-
-        // ----------------------------------------------------------------
         // *** TOTAL PRICE ***
         case actionTypes.TOTAL_PRICE_AND_CART_ITEM_COUNT:
             let items = 0;
