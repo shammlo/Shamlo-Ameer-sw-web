@@ -1,6 +1,6 @@
 //********** IMPORTS ************* */
 import React, { Component } from 'react';
-import { Card } from '../../components/card/Card';
+import Card from '../../components/card/Card';
 import Wrapper from '../../utils/Hoc/Wrappers/Wrapper';
 import { connect } from 'react-redux';
 import { ProductType, Price } from '../../store/types';
@@ -114,6 +114,7 @@ class CategoryPage extends Component<CategoryPageProps, CategoryPageState> {
                                     inStock={product.inStock}
                                     id={product.id}
                                     symbol={selectedCurrency?.currency.symbol}
+                                    attributes={product.attributes}
                                 />
                             );
                         })}
