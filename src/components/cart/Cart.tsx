@@ -109,29 +109,35 @@ class Cart extends Component<CartProps, CartState> {
                             </h2>
                         </Wrapper>
                         <Wrapper class="cart__body">
-                            {this.props.cart.map((item: any) => {
-                                return (
-                                    <CartCard
-                                        key={item.id}
-                                        id={item.id}
-                                        name={item.name}
-                                        brand={item.brand}
-                                        prices={item.prices}
-                                        img={item.gallery[0]}
-                                        // symbol={item.symbol}
-                                        quantity={item.quantity}
-                                        totalPrice={item.total}
-                                        currencyValue={this.props.currencyValue}
-                                        selectedAttrs={item.selectedAttrs}
-                                        decreaseQuantity={() =>
-                                            this.decreaseQuantity(item.id, item.quantity)
-                                        }
-                                        increaseQuantity={() =>
-                                            this.props.increaseItemQuantity(item.id)
-                                        }
-                                    />
-                                );
-                            })}
+                            {this.props.cart.length ? (
+                                this.props.cart.map((item: any) => {
+                                    return (
+                                        <CartCard
+                                            key={item.id}
+                                            id={item.id}
+                                            name={item.name}
+                                            brand={item.brand}
+                                            prices={item.prices}
+                                            img={item.gallery[0]}
+                                            // symbol={item.symbol}
+                                            quantity={item.quantity}
+                                            totalPrice={item.total}
+                                            currencyValue={this.props.currencyValue}
+                                            selectedAttrs={item.selectedAttrs}
+                                            decreaseQuantity={() =>
+                                                this.decreaseQuantity(item.id, item.quantity)
+                                            }
+                                            increaseQuantity={() =>
+                                                this.props.increaseItemQuantity(item.id)
+                                            }
+                                        />
+                                    );
+                                })
+                            ) : (
+                                <Wrapper>
+                                    <h2>No Items!</h2>
+                                </Wrapper>
+                            )}
                         </Wrapper>
                         <Wrapper class="cart__footer">
                             <Wrapper class="cart__footer--payment">

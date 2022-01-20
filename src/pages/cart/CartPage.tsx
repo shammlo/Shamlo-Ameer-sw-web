@@ -94,7 +94,7 @@ class CartPage extends Component<CartPageProps, CartPageState> {
                         })
                     ) : (
                         <Wrapper class="cartPage__warning">
-                            <h2>No cart items</h2>
+                            <h2>No Items in the cart!</h2>
                         </Wrapper>
                     )}
 
