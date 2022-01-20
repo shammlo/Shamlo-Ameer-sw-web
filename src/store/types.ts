@@ -29,4 +29,5 @@ export type ProductType = {
     prices: [Price];
     brand: string;
     quantity: number;
+    total?: number;
 };
