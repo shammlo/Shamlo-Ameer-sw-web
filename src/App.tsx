@@ -16,14 +16,18 @@ class App extends Component<AppProps, AppState> {
 
     componentDidMount() {
         console.log(
-            '%cDeveloped by %cShammlo Ameer %c.',
-            ' font-weight: bold; font-size: 25px',
-            'color: #FFD700; font-weight: bold; font-size: 28px',
-            ' font-weight: bold; font-size: 25px'
+            '%cDeveloped by %cShammlo Ameer%c.',
+            ' font-weight: bold; font-size: 20px',
+            'color: #FFD700; font-weight: bold; font-size: 23px',
+            ' font-weight: bold; font-size: 20px'
         );
         console.log(
-            '%cGitHub Profile: https://github.com/shammlo.',
-            ' font-weight: bold; font-size: 25px'
+            '%cCode source: https://github.com/shammlo/Shamlo-Ameer-sw-web.',
+            ' font-weight: bold; font-size: 20px'
+        );
+        console.log(
+            '%cPortfolio: https://shamlo.vercel.app/.',
+            ' font-weight: bold; font-size: 20px'
         );
     }
     // ----------------------------------------------------------------
