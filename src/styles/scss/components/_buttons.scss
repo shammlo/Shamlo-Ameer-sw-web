@@ -68,7 +68,13 @@
         &[value='dec'] {
             background-color: var(--c-white);
             color: var(--c-black);
-            border: 1px solid rgba(29, 31, 34, 1);
+            border: 1px solid var(--c-black);
+            transition: all 0.2s ease-in;
+            &:hover {
+                background-color: var(--c-black);
+                color: var(--c-white);
+                border: 1px solid var(--c-white);
+            }
         }
 
         &:active,
@@ -85,7 +91,7 @@
 
         background-color: var(--c-white);
         color: var(--c-black);
-        border: 1px solid rgba(29, 31, 34, 1);
+        border: 1px solid var(--c-black);
 
         span {
             font-family: sans-serif;
