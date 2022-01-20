@@ -43,12 +43,15 @@ class ProductPage extends Component<ProductPageProps, ProductPageState> {
     // ----------------------------------------------------------------
     // ********** CUSTOM FUNCTIONS ************* */
 
+    // - Selected image handler
     toggleProductImg = (img: string, index: number) => {
         this.setState({
             selectedImg: img,
         });
     };
 
+    // ---------------------------------
+    // - Selected attribute handler
     checkingAttributes = (item: Attribute) => {
         this.setState((prevState: ProductPageState) => {
             return {
@@ -60,7 +63,14 @@ class ProductPage extends Component<ProductPageProps, ProductPageState> {
         });
     };
 
+    // ---------------------------------
+    // - Add to cart function
     addToCart = () => {
+        //- trying to get the last item,
+        // const lastCheckedAttribute = Object.values(this.state.selectedAttrs)[
+        //     Object.values(this.state.selectedAttrs).length - 1
+        // ];
+
         const selectedProduct = this.props.products?.find(
             (product: ProductType) => product.id === this.props.router.params.productId
         );
@@ -71,6 +81,8 @@ class ProductPage extends Component<ProductPageProps, ProductPageState> {
         return this.props.addToCart(this.props.router.params.productId, this.state.selectedAttrs);
     };
 
+    // ---------------------------------
+    // - Modal handler
     popupToggle = () => {
         this.setState((prevState: ProductPageState) => {
             return {
@@ -137,6 +149,7 @@ class ProductPage extends Component<ProductPageProps, ProductPageState> {
                                                 <Wrapper style={{ display: 'flex' }} key={items.id}>
                                                     {items.items.map(
                                                         (item: Attribute, index: number) => {
+                                                            //- This fixed the issue of the attribute which having the same value
                                                             const attrDuplicate =
                                                                 item.id === 'Yes' ||
                                                                 item.id === 'No'
@@ -171,7 +184,7 @@ class ProductPage extends Component<ProductPageProps, ProductPageState> {
                                                                     />
                                                                     <label
                                                                         className={`radio-label ${
-                                                                            item.value.includes('#')
+                                                                            items.type === 'swatch'
                                                                                 ? 'colored'
                                                                                 : 'sized'
                                                                         }`}
@@ -187,9 +200,7 @@ class ProductPage extends Component<ProductPageProps, ProductPageState> {
                                                                         }}
                                                                     >
                                                                         <span>
-                                                                            {item.value.includes(
-                                                                                '#'
-                                                                            )
+                                                                            {items.type === 'swatch'
                                                                                 ? ''
                                                                                 : item.value}
                                                                         </span>
@@ -224,9 +235,6 @@ class ProductPage extends Component<ProductPageProps, ProductPageState> {
                                         <span>Add to cart</span>
                                     </button>
                                 </Wrapper>
-                                {/* <Wrapper class="product__info--description">
-                                    {selectedProduct?.description}
-                                </Wrapper> */}
                                 <div
                                     className="product__info--description"
                                     dangerouslySetInnerHTML={{

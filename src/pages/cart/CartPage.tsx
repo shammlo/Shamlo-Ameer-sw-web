@@ -43,7 +43,9 @@ class CartPage extends Component<CartPageProps, CartPageState> {
         document.title = 'Cart Bag';
     }
     // ----------------------------------------------------------------
+    // ********** CUSTOM FUNCTIONS ************* */
 
+    // - Decrease quantity of cart items by 1, and remove it from cart when quantity is reached 0
     decreaseQuantity = (id: string, quantity: number) => {
         if (quantity === 1) {
             return (
@@ -57,6 +59,8 @@ class CartPage extends Component<CartPageProps, CartPageState> {
         return this.props.decreaseItemQuantity(id);
     };
 
+    // ----------------------------------------------------------------
+    // ********** RENDER ************* */
     render() {
         return (
             <Wrapper class="cartPage">

@@ -40,6 +40,7 @@ class Layout extends Component<LayoutProps, LayoutState> {
     // ----------------------------------------------------------------
     // ********** CUSTOM FUNCTIONS ************* */
 
+    // - Toggle cart handler
     toggleCart = (open: boolean | undefined) => {
         if (open && open !== undefined) {
             return this.setState({ cartOpen: open });
@@ -47,12 +48,12 @@ class Layout extends Component<LayoutProps, LayoutState> {
         return this.setState({ cartOpen: !this.state.cartOpen });
     };
 
-    // ----------------------------------------------------------------
-    // ********** RENDER ************* */
-
     //- not required, capitalizing document title since category name is lowercase
     //- https://stackoverflow.com/a/7224605/14648783
     capitalizer = (s: string) => (s && s[0].toUpperCase() + s.slice(1)) || '';
+
+    // ----------------------------------------------------------------
+    // ********** RENDER ************* */
     render() {
         return (
             <Wrapper class="app layout">

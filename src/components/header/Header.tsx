@@ -42,6 +42,10 @@ class Header extends Component<HeaderProps, HeaderState> {
         document.removeEventListener('click', this.toggleCurrencyDropdown.bind(this), true);
     }
 
+    // ----------------------------------------------------------------
+    // ********** CUSTOM FUNCTIONS ************* */
+
+    //- Toggle currency dropdown, and close the dropdown when clicked outside
     toggleCurrencyDropdown = (event: Event) => {
         if (this.currencyDrop.current && !this.currencyDrop.current.contains(event.target)) {
             this.setState({ currencyDropdown: false });
@@ -50,6 +54,8 @@ class Header extends Component<HeaderProps, HeaderState> {
         }
     };
 
+    // ----------------------------------------------------------------
+    // ********** RENDER ************* */
     render() {
         return (
             <header className="header">
