@@ -1,7 +1,7 @@
 .app .cart {
     display: block;
     position: absolute;
-    width: 325px;
+    width: 330px;
     height: 540px;
     bottom: 0;
     top: 100%;
@@ -36,6 +36,7 @@
         overflow-y: auto;
         // max-height: 300px;
         margin-bottom: auto;
+        padding-right: 5px;
         &::-webkit-scrollbar {
             width: 10px;
             /* width of the entire scrollbar */
