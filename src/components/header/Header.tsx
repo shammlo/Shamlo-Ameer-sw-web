@@ -54,6 +54,12 @@ class Header extends Component<HeaderProps, HeaderState> {
         }
     };
 
+    // - Change currency
+    changeCurrency = (label: string, symbol: string) => {
+        this.props.changeCurrency(label, symbol);
+        this.setState({ currencyDropdown: false });
+    };
+
     // ----------------------------------------------------------------
     // ********** RENDER ************* */
     render() {
@@ -95,7 +101,7 @@ class Header extends Component<HeaderProps, HeaderState> {
                                                     <li
                                                         key={currency.label}
                                                         onClick={() =>
-                                                            this.props.changeCurrency(
+                                                            this.changeCurrency(
                                                                 currency.label,
                                                                 currency.symbol
                                                             )
