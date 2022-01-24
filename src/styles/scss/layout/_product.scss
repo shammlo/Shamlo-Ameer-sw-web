@@ -130,9 +130,11 @@
                 }
 
                 .attribute {
+                    .radio .radio-label {
+                    }
                     @include mq($bp-900) {
                         .radio .radio-label {
-                            padding: 12.5px 17.5px;
+                            // padding: 12.5px 17.5px;
 
                             span {
                                 font-size: 20px;
@@ -144,6 +146,12 @@
                     }
 
                     & div .radio {
+                        &-label.sized {
+                            span {
+                                font-size: 16px;
+                            }
+                        }
+
                         &:not(:last-child) {
                             margin-right: 10px;
                         }

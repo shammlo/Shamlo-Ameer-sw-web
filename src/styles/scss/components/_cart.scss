@@ -111,15 +111,21 @@
                 padding-right: 10px;
             }
             .radio {
+                width: 24px;
+                height: 24px;
                 &-label.sized {
-                    padding: 4px 6px;
+                    // padding: 4px 6px;
+                    padding: 0;
                     background: rgba(166, 166, 166, 0.2);
                     border: 1px solid #a6a6a6;
                     color: #a6a6a6;
                 }
 
                 &-label.colored {
-                    padding: 13px;
+                    // padding: 13px;
+                    width: 24px;
+                    height: 24px;
+                    padding: 0;
                 }
                 &-btn:checked + .radio-label.colored {
                     opacity: 1;

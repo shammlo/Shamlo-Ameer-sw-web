@@ -18,6 +18,7 @@
 
         transition: all 0.2s ease-in-out;
         opacity: 0;
+        z-index: 1;
         cursor: pointer;
 
         @include mq($bp-900) {
@@ -68,9 +69,12 @@
     }
     &__price {
         color: var(--c-black);
+
+        font-family: Raleway;
+        font-style: normal;
+        font-weight: 500;
         font-size: 18px;
-        font-weight: 700;
-        font-family: Roboto;
+        line-height: 160%;
     }
 
     &__info {

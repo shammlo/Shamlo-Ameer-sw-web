@@ -1,5 +1,7 @@
 .app {
     .radio {
+        width: 63px;
+        height: 45px;
         &-btn {
             &:checked + label {
                 background-color: var(--c-black);
@@ -17,22 +19,22 @@
             position: relative;
             background-color: var(--c-white);
             color: var(--c-black);
-            text-align: center;
             transition: all 0.2s ease-in-out;
-            // line-height: 150px;
             display: block;
             cursor: pointer;
-            // border: 3px solid transparent;
-            -webkit-box-sizing: border-box;
-            -moz-box-sizing: border-box;
-            box-sizing: border-box;
             box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+
+            height: 100%;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             span {
-                font-family: sans-serif;
+                font-family: Source Sans Pro;
                 font-style: normal;
                 font-weight: normal;
-                font-size: 16px;
-                line-height: 18px;
+                font-size: 14px;
+                line-height: 160%;
             }
         }
         &-label[for='White'] {
@@ -41,7 +43,7 @@
         &-label.sized {
             border: 1px solid #1d1f22;
             padding: 10px 15px;
-            width: fit-content;
+            // width: fit-content;
         }
 
         &-label.colored {
