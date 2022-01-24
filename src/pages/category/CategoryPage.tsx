@@ -55,39 +55,40 @@ class CategoryPage extends Component<CategoryPageProps, CategoryPageState> {
         }
     }
     // ----------------------------------------------------------------
-    changePagination = <T extends number>(id: T) => {
-        this.setState({
-            currentPage: id,
-        });
-    };
+    // Removed
+    // changePagination = <T extends number>(id: T) => {
+    //     this.setState({
+    //         currentPage: id,
+    //     });
+    // };
 
     // ----------------------------------------------------------------
     // **** RENDER ****
     render() {
         // - https://codepen.io/PiotrBerebecki/pen/pEYPbY?editors=0110
-        const { currentPage, productsPerPage } = this.state;
-        const indexOfLastProduct = currentPage * productsPerPage;
-        const indexOfFirstProduct = indexOfLastProduct - productsPerPage;
-        const currentProducts = this.props.products.slice(indexOfFirstProduct, indexOfLastProduct);
-        const pageNumbers = [];
-        for (let i = 1; i <= Math.ceil(this.props.products.length / productsPerPage); i++) {
-            pageNumbers.push(i);
-        }
+        // const { currentPage, productsPerPage } = this.state;
+        // const indexOfLastProduct = currentPage * productsPerPage;
+        // const indexOfFirstProduct = indexOfLastProduct - productsPerPage;
+        // const currentProducts = this.props.products.slice(indexOfFirstProduct, indexOfLastProduct);
+        // const pageNumbers = [];
+        // for (let i = 1; i <= Math.ceil(this.props.products.length / productsPerPage); i++) {
+        //     pageNumbers.push(i);
+        // }
 
-        const renderPageNumbers = pageNumbers.map((number: number) => {
-            let active = number === this.state.currentPage ? 'active' : '';
+        // const renderPageNumbers = pageNumbers.map((number: number) => {
+        //     let active = number === this.state.currentPage ? 'active' : '';
 
-            return (
-                <li
-                    key={number}
-                    className={`category__pagination--item ${active}`}
-                    id={`${number}`}
-                    onClick={() => this.changePagination(number)}
-                >
-                    <span>{number}</span>
-                </li>
-            );
-        });
+        //     return (
+        //         <li
+        //             key={number}
+        //             className={`category__pagination--item ${active}`}
+        //             id={`${number}`}
+        //             onClick={() => this.changePagination(number)}
+        //         >
+        //             <span>{number}</span>
+        //         </li>
+        //     );
+        // });
 
         // ----------------------------------------------------------------
 
@@ -99,7 +100,7 @@ class CategoryPage extends Component<CategoryPageProps, CategoryPageState> {
                     </Wrapper>
 
                     <Wrapper class="category__cards">
-                        {currentProducts?.map((product: ProductType) => {
+                        {this.props.products?.map((product: ProductType) => {
                             const selectedCurrency = product.prices.find((price: Price) => {
                                 return price.currency.label === this.props.currencyValue
                                     ? price.amount
@@ -119,9 +120,9 @@ class CategoryPage extends Component<CategoryPageProps, CategoryPageState> {
                             );
                         })}
                     </Wrapper>
-                    <Wrapper class="category__pagination">
+                    {/* <Wrapper class="category__pagination">
                         <ul className="category__pagination--list">{renderPageNumbers}</ul>
-                    </Wrapper>
+                    </Wrapper> */}
                 </Wrapper>
             </Wrapper>
         );
