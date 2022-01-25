@@ -21,6 +21,17 @@
     justify-content: center;
     align-items: center;
 }
-.mb-10 {
-    margin-bottom: 10px;
+.m {
+    &b-10 {
+        margin-bottom: 10px;
+    }
+    &r-10 {
+        margin-right: 10px;
+    }
+}
+
+.p {
+    &t {
+        padding-top: 10px;
+    }
 }
