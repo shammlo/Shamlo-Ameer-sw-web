@@ -20,13 +20,7 @@ class Modal extends Component<ModalProps> {
     render() {
         const { open, modalHandler, children, main } = this.props;
         return (
-            <Wrapper
-                class="modal"
-                style={{
-                    transform: open ? 'translateY(0)' : 'translateY(-200vh)',
-                    opacity: open ? '1' : '0',
-                }}
-            >
+            <Wrapper class={`modal ${open ? 'opened' : 'closed'}`}>
                 <Backdrop show={open} clicked={modalHandler} />
                 <Wrapper class="modal-overlay">
                     <Wrapper class="modal-content">
