@@ -21,6 +21,8 @@ interface CardProps {
     symbol: string | undefined;
     attributes: [Attributes];
     addToCart: (id: string, attributes: string[] | undefined) => void;
+    router: any;
+    redirectWarning: () => void;
 }
 
 class Card extends Component<CardProps, CartState> {
@@ -36,6 +38,12 @@ class Card extends Component<CardProps, CartState> {
 
     addToCart = () => {
         if (this.props.attributes.length) {
+            this.props.router.navigate(`product/${this.props.id}`, {
+                state: {
+                    test: false,
+                },
+            });
+            this.props.redirectWarning();
             return;
         }
         this.setState({
@@ -46,9 +54,14 @@ class Card extends Component<CardProps, CartState> {
     };
 
     // ----------------------------------------------------------------
+
+    toProductPage = () => {
+        this.props.router.navigate(`product/${this.props.id}`);
+    };
+    // ----------------------------------------------------------------
     render() {
         return this.props.id ? (
-            <Wrapper class="card">
+            <Wrapper class="card" clicked={this.toProductPage}>
                 <Wrapper class="card__image">
                     <img
                         className="card__image--img"
@@ -57,15 +70,14 @@ class Card extends Component<CardProps, CartState> {
                         width="354"
                         height="330"
                     />
-                    {this.props.inStock ? (
-                        <Link to={`product/${this.props.id}`} onClick={this.addToCart}>
-                            <Wrapper class="card__buy">
-                                <Wrapper class="card__buy--icon">
-                                    <Icon title="buy" />
-                                </Wrapper>
-                            </Wrapper>
-                        </Link>
-                    ) : (
+
+                    <Wrapper class="card__buy" clicked={this.addToCart}>
+                        <Wrapper class="card__buy--icon">
+                            <Icon title="buy" />
+                        </Wrapper>
+                    </Wrapper>
+
+                    {!this.props.inStock && (
                         <Wrapper class="card__info">
                             <span>Out of stock</span>
                         </Wrapper>
@@ -78,7 +90,7 @@ class Card extends Component<CardProps, CartState> {
                 </Wrapper>
             </Wrapper>
         ) : (
-            <Wrapper class="card" style={{ minHeight: '300px' }}>
+            <Wrapper class="card skeleton">
                 <Wrapper class="card__image center">
                     <Icon title="skeleton-img" />
                 </Wrapper>
@@ -93,6 +105,7 @@ class Card extends Component<CardProps, CartState> {
 const mapDispatchToProps = (dispatch: (arg0: any) => void) => ({
     addToCart: (id: string, attributes: string[] | undefined) =>
         dispatch(actions.productData.addToCart(id, attributes)),
+    redirectWarning: () => dispatch(actions.productData.redirectWarning()),
 });
 
 export default connect(null, mapDispatchToProps)(Card);

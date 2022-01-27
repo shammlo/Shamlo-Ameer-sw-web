@@ -116,6 +116,7 @@ class CategoryPage extends Component<CategoryPageProps, CategoryPageState> {
                                     id={product.id}
                                     symbol={selectedCurrency?.currency.symbol}
                                     attributes={product.attributes}
+                                    router={this.props.router}
                                 />
                             );
                         })}
