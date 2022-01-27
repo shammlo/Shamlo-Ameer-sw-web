@@ -12,12 +12,13 @@ interface Actions {
         category: string;
         currency: string;
         symbol: string;
-        id: string;
+        id: string | any;
         selectedAttrs: string[];
         count: number;
         price: number;
         totalPrice: number;
         categoryName: string;
+        index: number;
     };
 }
 // *** INITIAL STATE ***
@@ -37,6 +38,7 @@ const initialState = {
     totalPrice: 0,
     categoryName: 'all',
     cartItems: 0,
+    redirect: false,
 
     // *** CART ***
     cart: [],
@@ -127,9 +129,12 @@ const productReducer = (state = initialState, action: Actions) => {
         // ********** CART ************* */
         case actionTypes.ADD_TO_CART:
             // -- CHECK IF PRODUCT ALREADY IN CART ***
-            const inCart = state.cart.find((item: ProductType) =>
-                item.id === action.payload.id ? true : false
-            );
+            const inCart = state.cart.find((item: ProductType) => {
+                return item.id === action.payload.id &&
+                    item.selectedAttrs === action.payload.selectedAttrs
+                    ? true
+                    : false;
+            });
 
             // --- GET THE ITEM FROM THE PRODUCT ARRAY ***
             const addedItem: any = state.products?.find(
@@ -141,13 +146,47 @@ const productReducer = (state = initialState, action: Actions) => {
             );
             return {
                 ...state,
+
+                // -- Old way, if no duplicate wanted in cart
+                // cart: inCart
+                //     ? state.cart.map((item: ProductType) => {
+                //           const selectedCurrency: any = item.prices.find((price: Price) =>
+                //               price.currency.label === state.currencyValue ? price.amount : 0
+                //           );
+
+                //           return item.id === action.payload.id
+                //               ? {
+                //                     ...item,
+                //                     quantity: (item.quantity as number) + 1,
+                //                     total:
+                //                         ((item.quantity as number) + 1) *
+                //                         // addedItem.prices.find(
+                //                         //     (price: Price) =>
+                //                         //         price.currency.label === state.currencyValue
+                //                         // )?.amount,
+                //                         selectedCurrency.amount,
+                //                     selectedAttrs: action.payload.selectedAttrs,
+                //                 }
+                //               : item;
+                //       })
+                //     : [
+                //           ...state.cart,
+                //           {
+                //               ...addedItem,
+                //               quantity: 1,
+                //               selectedAttrs: action.payload.selectedAttrs,
+                //               total: selectedCur.amount,
+                //           },
+                //       ],
+
                 cart: inCart
                     ? state.cart.map((item: ProductType) => {
                           const selectedCurrency: any = item.prices.find((price: Price) =>
                               price.currency.label === state.currencyValue ? price.amount : 0
                           );
 
-                          return item.id === action.payload.id
+                          return item.id === action.payload.id &&
+                              item.selectedAttrs === action.payload.selectedAttrs
                               ? {
                                     ...item,
                                     quantity: (item.quantity as number) + 1,
@@ -171,6 +210,15 @@ const productReducer = (state = initialState, action: Actions) => {
                               total: selectedCur.amount,
                           },
                       ],
+                // : [
+                //       ...state.cart,
+                //       {
+                //           ...addedItem,
+                //           quantity: 1,
+                //           selectedAttrs: action.payload.selectedAttrs,
+                //           total: selectedCur.amount,
+                //       },
+                //   ],
                 selectedAttrs: action.payload.selectedAttrs,
             };
 
@@ -197,12 +245,8 @@ const productReducer = (state = initialState, action: Actions) => {
                 price += item.quantity * selectedCurr.amount;
                 currentCount += item?.quantity;
             });
-
-            // this.setState({ count: currentCount });
-
             return {
                 ...state,
-
                 totalPrice: price,
                 cartItems: items,
                 notificationCount: currentCount,
@@ -213,12 +257,12 @@ const productReducer = (state = initialState, action: Actions) => {
         case actionTypes.INCREASE_ITEM_QUANTITY:
             return {
                 ...state,
-                cart: state.cart.map((item: ProductType) => {
+                cart: state.cart.map((item: ProductType, index: number) => {
                     const selectedCurrency: any = item.prices.find((price: Price) =>
                         price.currency.label === state.currencyValue ? price.amount : 0
                     );
 
-                    return item.id === action.payload.id
+                    return index === action.payload.index
                         ? {
                               ...item,
                               quantity: item.quantity + 1,
@@ -233,11 +277,11 @@ const productReducer = (state = initialState, action: Actions) => {
         case actionTypes.DECREASE_ITEM_QUANTITY:
             return {
                 ...state,
-                cart: state.cart.map((item: ProductType) => {
+                cart: state.cart.map((item: ProductType, index: number) => {
                     const selectedCurrency = item.prices.find((price: Price) =>
                         price.currency.label === state.currencyValue ? price.amount : 0
                     ) as Price;
-                    return item.id === action.payload.id
+                    return index === action.payload.index
                         ? {
                               ...item,
                               quantity: item.quantity - 1,
@@ -245,6 +289,14 @@ const productReducer = (state = initialState, action: Actions) => {
                           }
                         : item;
                 }),
+            };
+        // ----------------------------------------------------------------
+        // ** Redirect to PLP **
+
+        case actionTypes.REDIRECT_WARNINGS:
+            return {
+                ...state,
+                redirect: true,
             };
 
         default:

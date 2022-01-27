@@ -64,17 +64,23 @@ const productData = {
     totalPriceAndCartItemCount: () => ({
         type: actionTypes.TOTAL_PRICE_AND_CART_ITEM_COUNT,
     }),
-    increaseItemQuantity: (id: string) => ({
+    increaseItemQuantity: (id: string, index: number) => ({
         type: actionTypes.INCREASE_ITEM_QUANTITY,
         payload: {
             id: id,
+            index: index,
         },
     }),
-    decreaseItemQuantity: (id: string) => ({
+    decreaseItemQuantity: (id: string, index: number) => ({
         type: actionTypes.DECREASE_ITEM_QUANTITY,
         payload: {
             id: id,
+            index: index,
         },
+    }),
+
+    redirectWarning: () => ({
+        type: actionTypes.REDIRECT_WARNINGS,
     }),
 };
 
