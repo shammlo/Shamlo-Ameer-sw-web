@@ -1,5 +1,5 @@
 //********** IMPORTS ************* */
-import { Component } from 'react';
+import React, { Component } from 'react';
 import Wrapper from '../../utils/Hoc/Wrappers/Wrapper';
 import CartCard from './cart-card/CartCard';
 import { connect } from 'react-redux';
@@ -13,7 +13,7 @@ import { Modal } from '../ui/modal/Modal';
 
 interface CartProps {
     open: boolean;
-    cart: object[];
+    cart: any;
     currencyValue: string;
     removeFromCart: (id: string) => void;
     router: any;
@@ -23,8 +23,8 @@ interface CartProps {
     notificationCounter: (number: number) => void;
     totalPrice: number;
     totalPriceHandler: () => void;
-    increaseItemQuantity: (id: string) => void;
-    decreaseItemQuantity: (id: string) => void;
+    increaseItemQuantity: (id: string, index: number) => void;
+    decreaseItemQuantity: (id: string, index: number) => void;
     cartItems: number;
     selectedAttrs: {
         [key: string]: {
@@ -61,7 +61,7 @@ class Cart extends Component<CartProps, CartState> {
     // ********** CUSTOM FUNCTIONS ************* */
 
     // - to insure that the item is deleted or decremented from the cart based on conditions
-    decreaseQuantity = (id: string, quantity: number) => {
+    decreaseQuantity = (id: string, quantity: number, index: number) => {
         if (quantity === 1) {
             return (
                 window.confirm('Do you want to remove this item from cart?') === true &&
@@ -71,7 +71,7 @@ class Cart extends Component<CartProps, CartState> {
         if (quantity === 0) {
             return;
         }
-        return this.props.decreaseItemQuantity(id);
+        return this.props.decreaseItemQuantity(id, index);
     };
 
     // - Remove item when quantity is 0
@@ -96,6 +96,11 @@ class Cart extends Component<CartProps, CartState> {
     // ********** RENDER ************* */
 
     render() {
+        // if (this.props.cart.length) {
+        //     Object.values(this.props.cart).map((item: any) => {
+        //         console.log(item);
+        //     });
+        // }
         return (
             <>
                 <Wrapper class={`cart ${this.props.open && 'opened'}`}>
@@ -110,25 +115,25 @@ class Cart extends Component<CartProps, CartState> {
                         </Wrapper>
                         <Wrapper class="cart__body">
                             {this.props.cart.length ? (
-                                this.props.cart.map((item: any) => {
+                                Object.values(this.props.cart).map((item: any, index: number) => {
                                     return (
                                         <CartCard
-                                            key={item.id}
+                                            key={item.id + index}
                                             id={item.id}
                                             name={item.name}
                                             brand={item.brand}
                                             prices={item.prices}
-                                            img={item.gallery[0]}
+                                            gallery={item.gallery}
                                             // symbol={item.symbol}
                                             quantity={item.quantity}
                                             totalPrice={item.total}
                                             currencyValue={this.props.currencyValue}
                                             selectedAttrs={item.selectedAttrs}
                                             decreaseQuantity={() =>
-                                                this.decreaseQuantity(item.id, item.quantity)
+                                                this.decreaseQuantity(item.id, item.quantity, index)
                                             }
                                             increaseQuantity={() =>
-                                                this.props.increaseItemQuantity(item.id)
+                                                this.props.increaseItemQuantity(item.id, index)
                                             }
                                         />
                                     );
@@ -171,7 +176,7 @@ class Cart extends Component<CartProps, CartState> {
                         <Wrapper class="modal-info">
                             <h2>Total Items:</h2>
                             <span>{this.props.cartItems}</span>
-                            <h2 style={{ paddingTop: '10px' }}>Total Price:</h2>
+                            <h2 className="pt-10">Total Price:</h2>
                             <span>
                                 {this.props.currencySymbol}
                                 {numberWithCommas(this.props.totalPrice)}
@@ -198,7 +203,9 @@ const mapDispatchToProps = (dispatch: (arg0: any) => void) => ({
     removeFromCart: (id: string) => dispatch(actions.productData.removeFromCart(id)),
 
     totalPriceHandler: () => dispatch(actions.productData.totalPriceAndCartItemCount()),
-    increaseItemQuantity: (id: string) => dispatch(actions.productData.increaseItemQuantity(id)),
-    decreaseItemQuantity: (id: string) => dispatch(actions.productData.decreaseItemQuantity(id)),
+    increaseItemQuantity: (id: string, index: number) =>
+        dispatch(actions.productData.increaseItemQuantity(id, index)),
+    decreaseItemQuantity: (id: string, index: number) =>
+        dispatch(actions.productData.decreaseItemQuantity(id, index)),
 });
 export default connect(mapStateToProps, mapDispatchToProps)(withRouter(Cart));
