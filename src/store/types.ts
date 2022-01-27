@@ -30,4 +30,5 @@ export type ProductType = {
     brand: string;
     quantity: number;
     total?: number;
+    selectedAttrs?: object;
 };
