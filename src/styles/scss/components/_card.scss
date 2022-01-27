@@ -6,6 +6,7 @@
     flex-direction: column;
     justify-content: flex-start;
     gap: 10px;
+    cursor: pointer;
 
     &__buy {
         position: absolute;
@@ -58,6 +59,7 @@
         &--img {
             width: 100%;
             height: 100%;
+            object-fit: contain;
         }
     }
 
@@ -116,4 +118,7 @@
             opacity: 1;
         }
     }
+}
+.app .card.skeleton {
+    min-height: 300px;
 }

@@ -75,3 +75,13 @@
         }
     }
 }
+
+.app .modal.opened {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.app .modal.closed {
+    opacity: 0;
+    transform: translateY(-200vh);
+}

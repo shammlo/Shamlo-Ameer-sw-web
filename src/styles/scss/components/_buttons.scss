@@ -14,7 +14,10 @@
             }
             display: none;
         }
-
+        &-btn.checked {
+            background-color: var(--c-black);
+            color: var(--c-white);
+        }
         &-label {
             position: relative;
             background-color: var(--c-white);
