@@ -96,11 +96,6 @@ class Cart extends Component<CartProps, CartState> {
     // ********** RENDER ************* */
 
     render() {
-        // if (this.props.cart.length) {
-        //     Object.values(this.props.cart).map((item: any) => {
-        //         console.log(item);
-        //     });
-        // }
         return (
             <>
                 <Wrapper class={`cart ${this.props.open && 'opened'}`}>
