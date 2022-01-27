@@ -12,8 +12,8 @@ const middleware = [sagaMiddleware];
 // - disabling redux-logger for production
 if (process.env.NODE_ENV === 'development') {
     // - Note: uncomment the following line to enable redux-logger
-    const { createLogger } = require('redux-logger');
-    middleware.push(createLogger());
+    // const { createLogger } = require('redux-logger');
+    // middleware.push(createLogger());
 }
 
 const composeEnhancers =
