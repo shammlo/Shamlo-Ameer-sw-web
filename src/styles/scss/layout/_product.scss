@@ -142,7 +142,7 @@
                         }
                     }
                     &:not(:last-child) {
-                        margin-bottom: 10px;
+                        margin-bottom: 20px;
                     }
 
                     & div .radio {
@@ -155,6 +155,10 @@
                         &:not(:last-child) {
                             margin-right: 10px;
                         }
+                    }
+
+                    & > div {
+                        gap: 10px;
                     }
                 }
                 .btn-size {
