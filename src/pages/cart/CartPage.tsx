@@ -14,8 +14,8 @@ interface CartPageProps {
     removeFromCart: (id: string) => void;
     currencyValue: string;
     totalPrice: number;
-    increaseItemQuantity: (id: string) => void;
-    decreaseItemQuantity: (id: string) => void;
+    increaseItemQuantity: (id: string, index: number) => void;
+    decreaseItemQuantity: (id: string, index: number) => void;
     currencySymbol: string;
     selectedAttrs: {
         [key: string]: {
@@ -46,7 +46,7 @@ class CartPage extends Component<CartPageProps, CartPageState> {
     // ********** CUSTOM FUNCTIONS ************* */
 
     // - Decrease quantity of cart items by 1, and remove it from cart when quantity is reached 0
-    decreaseQuantity = (id: string, quantity: number) => {
+    decreaseQuantity = (id: string, quantity: number, index: number) => {
         if (quantity === 1) {
             return (
                 window.confirm('Do you want to remove this item from cart?') === true &&
@@ -56,7 +56,7 @@ class CartPage extends Component<CartPageProps, CartPageState> {
         if (quantity === 0) {
             return;
         }
-        return this.props.decreaseItemQuantity(id);
+        return this.props.decreaseItemQuantity(id, index);
     };
 
     // ----------------------------------------------------------------
@@ -70,25 +70,26 @@ class CartPage extends Component<CartPageProps, CartPageState> {
                     </Wrapper>
 
                     {this.props.cart.length ? (
-                        this.props.cart.map((item: any) => {
+                        this.props.cart.map((item: any, index: number) => {
                             return (
                                 <CartCard
-                                    id={item.id}
+                                    id={item.id + index}
                                     key={item.id}
                                     name={item.name}
                                     brand={item.brand}
                                     prices={item.prices}
-                                    img={item.gallery[0]}
+                                    gallery={item.gallery}
                                     quantity={item.quantity}
                                     totalPrice={item.total}
                                     currencyValue={this.props.currencyValue}
                                     selectedAttrs={item.selectedAttrs}
                                     increaseQuantity={() =>
-                                        this.props.increaseItemQuantity(item.id)
+                                        this.props.increaseItemQuantity(item.id, index)
                                     }
                                     decreaseQuantity={() =>
-                                        this.decreaseQuantity(item.id, item.quantity)
+                                        this.decreaseQuantity(item.id, item.quantity, index)
                                     }
+                                    carousel
                                 />
                             );
                         })
@@ -100,7 +101,7 @@ class CartPage extends Component<CartPageProps, CartPageState> {
 
                     <Wrapper class="cartPage__checkout">
                         <Wrapper class="cartPage__checkout--info">
-                            <Wrapper class="flex ai-center" style={{ marginRight: '10px' }}>
+                            <Wrapper class="flex ai-center mr-10">
                                 <h2>Items in cart:</h2>
                                 <span>{this.props.cartItems},</span>
                             </Wrapper>
@@ -131,7 +132,7 @@ class CartPage extends Component<CartPageProps, CartPageState> {
                             <Wrapper class="modal-info">
                                 <h2>Total Items:</h2>
                                 <span>{this.props.cartItems}</span>
-                                <h2 style={{ paddingTop: '10px' }}>Total Price:</h2>
+                                <h2 className="pt-10">Total Price:</h2>
                                 <span>
                                     {this.props.currencySymbol}
                                     {numberWithCommas(this.props.totalPrice)}
@@ -156,7 +157,9 @@ const mapStateToProps = (state: any) => ({
 });
 const mapDispatchToProps = (dispatch: (arg0: any) => void) => ({
     removeFromCart: (id: string) => dispatch(actions.productData.removeFromCart(id)),
-    increaseItemQuantity: (id: string) => dispatch(actions.productData.increaseItemQuantity(id)),
-    decreaseItemQuantity: (id: string) => dispatch(actions.productData.decreaseItemQuantity(id)),
+    increaseItemQuantity: (id: string, index: number) =>
+        dispatch(actions.productData.increaseItemQuantity(id, index)),
+    decreaseItemQuantity: (id: string, index: number) =>
+        dispatch(actions.productData.decreaseItemQuantity(id, index)),
 });
 export default connect(mapStateToProps, mapDispatchToProps)(CartPage);
